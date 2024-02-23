@@ -29,7 +29,7 @@ class PostController extends Controller
         $categories = Category::all();
         $enumPosted = (new Post())->enumPosted;
         $enumType = (new Post())->enumType;
-        return Inertia::render('Dashboard/Post/Create', compact('categories', 'enumPosted', 'enumType'));
+        return Inertia::render('Dashboard/Post/Save', compact('categories', 'enumPosted', 'enumType'));
     }
 
     /**
@@ -38,7 +38,7 @@ class PostController extends Controller
     public function store(Store $request)
     {
         Post::create($request->validated());
-        return to_route('post.index')->with('message', 'Post '. $request->title.' actualizado con exito.');
+        return to_route('post.index')->with('message', 'Post '. $request->title.' creado con exito.');
     }
 
     /**
@@ -58,7 +58,7 @@ class PostController extends Controller
         $post = Post::with('category')->find($post)->first();
         $enumPosted = (new Post())->enumPosted;
         $enumType = (new Post())->enumType;
-        return Inertia::render('Dashboard/Post/Edit', compact('post', 'categories', 'enumPosted', 'enumType'));
+        return Inertia::render('Dashboard/Post/Save', compact('post', 'categories', 'enumPosted', 'enumType'));
     }
 
     /**
