@@ -25,6 +25,14 @@ const switchToTeam = (team) => {
 const logout = () => {
     router.post(route('logout'));
 };
+
+// flash message
+const visibleFlashContainer = ref(true);
+
+const hideFlashMessage = () => {
+    setTimeout(() => visibleFlashContainer.value = false, 1000);
+    return true;
+};
 </script>
 
 <template>
@@ -282,6 +290,14 @@ const logout = () => {
 
             <!-- Page Content -->
             <main>
+                <transition>
+                    <div v-if="visibleFlashContainer">
+                        <div v-if="$page.props.flash.message && hideFlashMessage()" class="container my-2 rounded-sm shadow-sm bg-purple-100 border-l-4 border-purple-500 text-purple-700 p-4" role="alert">
+                            <p>{{ $page.props.flash.message }}</p>
+                        </div>
+                    </div>
+                </transition>
+                
                 <slot />
             </main>
         </div>
