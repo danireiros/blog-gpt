@@ -35,5 +35,7 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
-    Route::resource('/category', CategoryController::class);
+    // rutas
+    Route::resource('/category',    CategoryController::class);
+    Route::resource('/post',        PostController::class);
 });

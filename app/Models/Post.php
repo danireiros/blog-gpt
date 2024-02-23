@@ -12,7 +12,7 @@ class Post extends Model
     protected $fillable = [
         'title',
         'slug',
-        'date',
+        //'date',
         'image',
         'text',
         'description',
@@ -20,6 +20,9 @@ class Post extends Model
         'type',
         'category_id'
     ];
+
+    public $enumPosted = ['yes', 'not'];
+    public $enumType = ['ad', 'post', 'course', 'movie'];
 
     public function category(){
         return $this->belongsTo(Category::class);

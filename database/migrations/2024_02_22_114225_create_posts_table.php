@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('title', 255);
             $table->string('slug', 255);
-            $table->string('date')->default(Carbon::now());
+            //$table->string('date')->default(Carbon::now());
             $table->string('image', 260)->nullable();
             $table->text('text')->nullable();
             $table->text('description')->nullable();

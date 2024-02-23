@@ -7,7 +7,7 @@
 }
 
 .card {
-    @apply bg-white dark:bg-gray-800 shadow sm:rounded-md
+    @apply bg-white dark:bg-gray-800 shadow m-auto
 }
 
 .card-body {

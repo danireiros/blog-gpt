@@ -30,7 +30,7 @@ const logout = () => {
 const visibleFlashContainer = ref(true);
 
 const hideFlashMessage = () => {
-    setTimeout(() => visibleFlashContainer.value = false, 1000);
+    setTimeout(() => visibleFlashContainer.value = false, 3000);
     return true;
 };
 </script>
@@ -58,6 +58,12 @@ const hideFlashMessage = () => {
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
+                                </NavLink>
+                                <NavLink :href="route('post.index')" :active="route().current('post.index')">
+                                    Posts
+                                </NavLink>
+                                <NavLink :href="route('category.index')" :active="route().current('category.index')">
+                                    Categorias
                                 </NavLink>
                             </div>
                         </div>
@@ -202,6 +208,12 @@ const hideFlashMessage = () => {
                         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
                         </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('category.index')" :active="route().current('category.index')">
+                            Categorias
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('post.index')" :active="route().current('post.index')">
+                            Posts
+                        </ResponsiveNavLink>
                     </div>
 
                     <!-- Responsive Settings Options -->
@@ -292,8 +304,10 @@ const hideFlashMessage = () => {
             <main>
                 <transition>
                     <div v-if="visibleFlashContainer">
-                        <div v-if="$page.props.flash.message && hideFlashMessage()" class="container my-2 rounded-sm shadow-sm bg-purple-100 border-l-4 border-purple-500 text-purple-700 p-4" role="alert">
-                            <p>{{ $page.props.flash.message }}</p>
+                        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                            <div v-if="$page.props.flash.message && hideFlashMessage()" class="container my-2 rounded-sm shadow-sm bg-purple-100 border-l-4 border-purple-500 text-purple-700 p-4" role="alert">
+                                <p>{{ $page.props.flash.message }}</p>
+                            </div>
                         </div>
                     </div>
                 </transition>
