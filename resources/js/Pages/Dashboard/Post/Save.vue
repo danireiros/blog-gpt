@@ -10,6 +10,13 @@
                 <span v-else>Actualizar </span>un post para el blog
             </template>
             <template #form>
+                <div v-if="post.image" class="col-span-6">
+                    <InputLabel for="">Imagen actual</InputLabel>
+                    <div class="max-w-64 rounded-md border p-1 my-2">
+                        <img :src="'/image/post/'+post.image">
+                        <a :href="'/image/post/'+post.image" download="" class="hover:text-white inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150 mt-1">Descargar</a>
+                    </div>
+                </div>
                 <div class="col-span-6">
                     <InputLabel for="">Titulo</InputLabel>
                     <InputError :message="errors.title"/>
@@ -71,26 +78,53 @@
                         <InputError :message="errors.image"/>
                         <TextInput class="w-full rounded-none" type="file" @input="form.image = $event.target.files[0]" />
                     </div> -->
+
+                    <!-- Subida de fichero normal -->
                     <InputLabel for="">Imagen</InputLabel>
+                    <InputError :message="errors.image"/>
                     <section>
                         <o-field class="file">
                             <o-upload v-slot="{ onclick }" v-model="form.image">
                                 <o-button tag="button" variant="primary" @click="onclick">
-                                    <o-icon icon="upload" />
-                                    <span>Seleccionar imagen</span>
+                                    <span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 inline">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15m0-3-3-3m0 0-3 3m3-3V15" />
+                                        </svg>
+                                    Selecciona una imagen</span>
                                 </o-button>
                             </o-upload>
-                            <span v-if="form.image != ''" class="file-name">
-                                Imagen cargada <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 inline">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.125 2.25h-4.5c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125v-9M10.125 2.25h.375a9 9 0 0 1 9 9v.375M10.125 2.25A3.375 3.375 0 0 1 13.5 5.625v1.5c0 .621.504 1.125 1.125 1.125h1.5a3.375 3.375 0 0 1 3.375 3.375M9 15l2.25 2.25L15 12" />
-                                </svg>
-                            </span>
-                            <span v-else class="file-name">
-                                
-                            </span>
+                            <span v-if="form.image.name != ''" class="border p-1 pl-5">
+                            {{ form.image.name }} <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 inline">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M10.125 2.25h-4.5c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125v-9M10.125 2.25h.375a9 9 0 0 1 9 9v.375M10.125 2.25A3.375 3.375 0 0 1 13.5 5.625v1.5c0 .621.504 1.125 1.125 1.125h1.5a3.375 3.375 0 0 1 3.375 3.375M9 15l2.25 2.25L15 12" />
+                            </svg>
+                        </span>
                         </o-field>
                     </section>
 
+                    <!-- <section>
+                        <o-field class="file">
+                            <o-upload v-slot="{ onclick }" v-model="formImage" drag-drop>
+                                <span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 inline">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15m0-3-3-3m0 0-3 3m3-3V15" />
+                                    </svg>
+                                    Arrastra una imagen
+                                </span>
+                                <o-button tag="button" variant="primary">
+                                    <span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 inline">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15m0-3-3-3m0 0-3 3m3-3V15" />
+                                        </svg>
+                                        Arrastra una imagen</span>
+                                </o-button>
+                                <span v-if="form.image != ''">
+                                    Imagen cargada <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 inline">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.125 2.25h-4.5c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125v-9M10.125 2.25h.375a9 9 0 0 1 9 9v.375M10.125 2.25A3.375 3.375 0 0 1 13.5 5.625v1.5c0 .621.504 1.125 1.125 1.125h1.5a3.375 3.375 0 0 1 3.375 3.375M9 15l2.25 2.25L15 12" />
+                                    </svg>
+                                </span>
+                            </o-upload>
+                        </o-field>
+                    </section> -->
                 </div>
 
             </template>
@@ -109,7 +143,7 @@
 </template>
 
 <script>
-import { useForm, router } from "@inertiajs/vue3";
+import { Link, useForm, router } from "@inertiajs/vue3";
 
 import AppLayout from "@/Layouts/AppLayout.vue";
 import FormSection from "@/Components/FormSection.vue";
@@ -117,12 +151,13 @@ import InputLabel from "@/Components/InputLabel.vue";
 import TextInput from "@/Components/TextInput.vue";
 import InputError from "@/Components/InputError.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import { ref } from "vue";
+import { watch, ref } from "vue";
 
 const file = ref(null);
 
 export default {
     components:{
+        Link,
         AppLayout,
         FormSection,
         InputLabel,
@@ -144,6 +179,7 @@ export default {
                 posted: "",
                 type: "",
                 image: "",
+                formImage: "",
             }
         },
         categories: Object,
@@ -160,8 +196,10 @@ export default {
             text: props.post.text,
             posted: props.post.posted,
             type: props.post.type,
-            image: '',
+            image: ''
         })
+
+        const formImage = ref([]);
 
         function submit(){
             if(form.id == ""){
@@ -189,7 +227,21 @@ export default {
                 });
         }
 
-        return { form, submit }
+        watch(() => form.image, (value) => {
+            console.log(value);
+        },
+            { deep: true });
+
+        // Subir imagen al cargarla
+        watch(() => formImage, (currentFile) => {
+            /*
+            router.post(route("post.upload", form.id), {
+                image: currentFile.value
+            }); */
+        },
+            { deep: true });
+
+        return { form, formImage, submit }
     },
 }
 </script>

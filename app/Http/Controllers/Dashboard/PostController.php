@@ -43,11 +43,11 @@ class PostController extends Controller
         if($request->image)
             $this->upload($request, $post);
 
-        return Inertia::render('Dashboard/Post/UploadFile', compact('post'))
-            ->with('message', 'Post '. $post->title.' creado con exito.');
+        /* return Inertia::render('Dashboard/Post/UploadFile', compact('post'))
+            ->with('message', 'Post '. $post->title.' creado con exito.'); */
 
         // En caso de quererlo en la siguiente vista
-        //return to_route('post.create.upload', $post)->with('message', 'Post '. $post->title.' creado con exito.');;
+        return to_route('post.create.upload', $post)->with('message', 'Post '. $post->title.' creado con exito.');
     }
 
     /**

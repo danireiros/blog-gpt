@@ -1,7 +1,6 @@
 <template>
     <AppLayout>
         <div class="container">
-       
             <div class="md:grid md:grid-cols-3 md:gap-6 max-w-7xl mx-auto py-10 sm:px-6 lg:px-8 mt-2">            
                 <div class="md:col-span-1 flex justify-between">
                     <div class="px-4 sm:px-0">
@@ -24,6 +23,7 @@
                                 </PrimaryButton> -->
 
                                 <InputLabel for="">Imagen</InputLabel>
+                                <InputError :message="errors.image"/>
                                 <section>
                                     <o-field class="file">
                                         <o-upload v-slot="{ onclick }" v-model="form.image">
@@ -32,8 +32,8 @@
                                                 <span>Seleccionar imagen</span>
                                             </o-button>
                                         </o-upload>
-                                        <span v-if="form.image != ''" class="file-name">
-                                            Imagen cargada <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 inline">
+                                        <span v-if="form.image.name != ''" class="file-name">
+                                            {{ form.image.name }} <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 inline">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M10.125 2.25h-4.5c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125v-9M10.125 2.25h.375a9 9 0 0 1 9 9v.375M10.125 2.25A3.375 3.375 0 0 1 13.5 5.625v1.5c0 .621.504 1.125 1.125 1.125h1.5a3.375 3.375 0 0 1 3.375 3.375M9 15l2.25 2.25L15 12" />
                                             </svg>
                                         </span>
@@ -42,9 +42,10 @@
                                         </span>
                                     </o-field>
                                 </section>
-
-                                <PrimaryButton class="mt-1" @click="upload">
-                                    Subir imagen
+                            </div>
+                            <div class="col-span-6">
+                                <PrimaryButton class="mt-1 float-right" @click="upload">
+                                    Subir imagen y terminar
                                 </PrimaryButton>
                             </div>
                         </div>
@@ -78,13 +79,17 @@ export default {
     props:{
         errors: Object,
         post: Object,
+        message: String
     },
     setup(props) {
         const form = useForm({
             id: props.post.id,
             title: props.post.title,
-            image: ''
+            image: '',
+            message: ''
         })
+
+        console.log(props);
 
         function upload(){
             router.post(route('post.upload', form.id), form);
