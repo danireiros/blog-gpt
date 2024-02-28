@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Post\Put;
 use App\Http\Requests\Post\Store;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -37,8 +38,24 @@ class PostController extends Controller
      */
     public function store(Store $request)
     {
-        Post::create($request->validated());
-        return to_route('post.index')->with('message', 'Post '. $request->title.' creado con exito.');
+        $post = Post::create($request->validated());
+
+        if($request->image)
+            $this->upload($request, $post);
+
+        return Inertia::render('Dashboard/Post/UploadFile', compact('post'))
+            ->with('message', 'Post '. $post->title.' creado con exito.');
+
+        // En caso de quererlo en la siguiente vista
+        //return to_route('post.create.upload', $post)->with('message', 'Post '. $post->title.' creado con exito.');;
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function create_file(Post $post)
+    {
+        return Inertia::render('Dashboard/Post/UploadFile', compact('post'))->with('message', 'Post '. $post->title.' creado con exito.');
     }
 
     /**
@@ -58,6 +75,7 @@ class PostController extends Controller
         $post = Post::with('category')->find($post)->first();
         $enumPosted = (new Post())->enumPosted;
         $enumType = (new Post())->enumType;
+        //return Inertia::render('Dashboard/Post/Edit', compact('post', 'categories', 'enumPosted', 'enumType'));
         return Inertia::render('Dashboard/Post/Save', compact('post', 'categories', 'enumPosted', 'enumType'));
     }
 
@@ -67,6 +85,10 @@ class PostController extends Controller
     public function update(Put $request, Post $post)
     {
         $post->update($request->validated());
+
+        if($request->image)
+            $this->upload($request, $post);
+        
         return to_route('post.index')->with('message', 'Post '. $post->title.' actualizado con exito.');
     }
 
@@ -76,6 +98,28 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $post->delete();
-        return to_route('post.index')->with('message', 'Post eliminado con exito.');;
+        return to_route('post.index')->with('message', 'Post eliminado con exito.');
+    }
+
+    /**
+     * Upload Post image to public_path
+     */
+    public function upload(Request $request, Post $post)
+    {
+        $request->validate(
+            ['image' => 'required|mimes:jpg,jpeg,png,gif|max:10240'],
+        );
+
+        Storage::disk('public_upload')->delete("image/post/".$post->image);
+
+        $data['image'] = $filename = time().'.'.$request['image']->extension();
+
+        $request->image->move(public_path('image/post'), $filename);
+
+        $post->update(
+            $data
+        );
+
+        return to_route('post.index')->with('message', 'Imagen de '. $post->title.' subida con exito.');
     }
 }

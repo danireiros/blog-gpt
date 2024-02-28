@@ -69,6 +69,32 @@
                 </PrimaryButton>
             </template>
         </FormSection>
+
+        <div class="md:grid md:grid-cols-3 md:gap-6 max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+            <div class="md:col-span-1 flex justify-between">
+                <div class="px-4 sm:px-0">
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100"> Actualizar imagen </h3>
+                    <p class="mt-1 text-sm text-gray-600 dark:text-gray-400"> Imagen de portada del post </p>
+                </div>
+                <div class="px-4 sm:px-0">
+
+                </div>
+            </div>
+            <div class="mt-5 md:mt-0 md:col-span-2 mb-2">
+                <div class="px-4 py-5 bg-white dark:bg-gray-800 sm:p-6 shadow sm:rounded-tl-md sm:rounded-tr-md">
+                    <div class="grid grid-cols-6 gap-6">
+                        <div class="col-span-6">
+                            <InputLabel for="image">Imagen</InputLabel>
+                            <InputError :message="errors.image"/>
+                            <TextInput class="w-full rounded-none" type="file" @input="form.image = $event.target.files[0]" />
+                            <PrimaryButton class="mt-1" @click="upload">
+                                Subir imagen
+                            </PrimaryButton>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </AppLayout>
 </template>
 
@@ -108,13 +134,18 @@ export default {
             text: props.post.text,
             posted: props.post.posted,
             type: props.post.type,
+            image: ''
         })
 
         function submit(){
             form.put(route('post.update', form.id), form);
         }
 
-        return { form, submit }
+        function upload(){
+            router.post(route('post.upload', form.id), form);
+        }
+
+        return { form, submit, upload }
     },
 }
 </script>

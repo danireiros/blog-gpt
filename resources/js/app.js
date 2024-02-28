@@ -6,6 +6,11 @@ import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 
+import Oruga from '@oruga-ui/oruga-next';
+import { bulmaConfig } from '@oruga-ui/theme-bulma'
+
+import '@oruga-ui/theme-bulma/dist/bulma.css'
+
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
 createInertiaApp({
@@ -15,6 +20,7 @@ createInertiaApp({
         return createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue)
+            .use(Oruga, bulmaConfig)
             .mount(el);
     },
     progress: {

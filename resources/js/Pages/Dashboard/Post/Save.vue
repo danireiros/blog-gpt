@@ -64,14 +64,47 @@
                         <label for="enumType" class="ml-3">{{ value }}</label><br>
                     </div>
                 </div>
+
+                <div class="col-span-6" v-if="form.id != ''">
+                    <!-- <div>
+                        <InputLabel for="image">Imagen</InputLabel>
+                        <InputError :message="errors.image"/>
+                        <TextInput class="w-full rounded-none" type="file" @input="form.image = $event.target.files[0]" />
+                    </div> -->
+                    <InputLabel for="">Imagen</InputLabel>
+                    <section>
+                        <o-field class="file">
+                            <o-upload v-slot="{ onclick }" v-model="form.image">
+                                <o-button tag="button" variant="primary" @click="onclick">
+                                    <o-icon icon="upload" />
+                                    <span>Seleccionar imagen</span>
+                                </o-button>
+                            </o-upload>
+                            <span v-if="form.image != ''" class="file-name">
+                                Imagen cargada <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 inline">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.125 2.25h-4.5c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125v-9M10.125 2.25h.375a9 9 0 0 1 9 9v.375M10.125 2.25A3.375 3.375 0 0 1 13.5 5.625v1.5c0 .621.504 1.125 1.125 1.125h1.5a3.375 3.375 0 0 1 3.375 3.375M9 15l2.25 2.25L15 12" />
+                                </svg>
+                            </span>
+                            <span v-else class="file-name">
+                                
+                            </span>
+                        </o-field>
+                    </section>
+
+                </div>
+
             </template>
             <template #actions>
                 <PrimaryButton class="mt-1" type="submit">
-                    <span v-if="form.id == ''">Crear post</span>
+                    <span v-if="form.id == ''">Siguiente <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 inline">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                    </svg>
+                    </span>
                     <span v-else>Actualizar post</span>
                 </PrimaryButton>
             </template>
         </FormSection>
+
     </AppLayout>
 </template>
 
@@ -84,6 +117,9 @@ import InputLabel from "@/Components/InputLabel.vue";
 import TextInput from "@/Components/TextInput.vue";
 import InputError from "@/Components/InputError.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
+import { ref } from "vue";
+
+const file = ref(null);
 
 export default {
     components:{
@@ -107,6 +143,7 @@ export default {
                 text: "",
                 posted: "",
                 type: "",
+                image: "",
             }
         },
         categories: Object,
@@ -123,13 +160,33 @@ export default {
             text: props.post.text,
             posted: props.post.posted,
             type: props.post.type,
+            image: '',
         })
 
         function submit(){
-            if(form.id == "")
-                router.post(route('post.store', form));
-            else
-                form.put(route('post.update', form.id), form);
+            if(form.id == ""){
+                router.post(route('post.store', form.id), {
+                    title: form.title,
+                    slug: form.slug,
+                    category_id: form.category_id,
+                    description: form.description,
+                    text: form.text,
+                    posted: form.posted,
+                    type: form.type,
+                    image: form.image,
+                });
+            }else
+                router.post(route('post.update', form.id), {
+                    _method: 'put',
+                    title: form.title,
+                    slug: form.slug,
+                    category_id: form.category_id,
+                    description: form.description,
+                    text: form.text,
+                    posted: form.posted,
+                    type: form.type,
+                    image: form.image,
+                });
         }
 
         return { form, submit }

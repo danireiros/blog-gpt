@@ -36,6 +36,8 @@ Route::middleware([
     })->name('dashboard');
 
     // rutas
-    Route::resource('/category',    CategoryController::class);
-    Route::resource('/post',        PostController::class);
+    Route::resource('/category',            CategoryController::class);
+    Route::resource('/post',                PostController::class);
+    Route::post('/post/upload/{post}',      [PostController::class, 'upload'])->name('post.upload');
+    //Route::get('/post/file/upload/{post}',  [PostController::class, 'create_file'])->name('post.create.upload');
 });
