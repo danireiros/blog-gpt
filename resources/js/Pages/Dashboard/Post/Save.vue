@@ -40,10 +40,12 @@
                     </select>
                 </div>
 
-                <div class="col-span-6">
+                <div class="col-span-6 no-tailwindcss-base">
                     <InputLabel value="Text" />
                     <InputError :message="errors.text" />
-                    <textarea rows="4" placeholder="Contenido del post aquí..." class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" v-model="form.text"></textarea>                   
+                    <!-- <textarea rows="4" placeholder="Contenido del post aquí..." class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" v-model="form.text"></textarea>                   
+                     -->
+                     <ckeditor :editor="editor" v-model="form.text" :config="editorConfig"></ckeditor>
                 </div>
 
                 <div class="col-span-6">
@@ -153,6 +155,8 @@ import InputError from "@/Components/InputError.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import { watch, ref } from "vue";
 
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
 const file = ref(null);
 
 export default {
@@ -164,6 +168,16 @@ export default {
         TextInput,
         InputError,
         PrimaryButton,
+        ClassicEditor,
+    },
+    data() {
+        return {
+            editor: ClassicEditor,
+            editorData: '<p>Content of the editor.</p>',
+            editorConfig: {
+                // The configuration of the editor.
+            }
+        };
     },
     props:{
         errors: Object,

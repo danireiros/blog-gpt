@@ -6,8 +6,12 @@ import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 
+// oruga
 import Oruga from '@oruga-ui/oruga-next';
 import { bulmaConfig } from '@oruga-ui/theme-bulma'
+
+// ckeditor
+import CKEditor from '@ckeditor/ckeditor5-vue';
 
 import '@oruga-ui/theme-bulma/dist/bulma.css'
 
@@ -21,6 +25,7 @@ createInertiaApp({
             .use(plugin)
             .use(ZiggyVue)
             .use(Oruga, bulmaConfig)
+            .use(CKEditor)
             .mount(el);
     },
     progress: {
