@@ -1,4 +1,19 @@
 <template>
+
+    <confirmation-modal :show="confirmDeleteActive">
+        <template v-slot:title> Confirme la acción </template>
+
+        <template v-slot:content>
+            <p>¿Seguro que quieres eliminar el post?</p>
+        </template>
+
+        <template v-slot:footer>
+            <o-button variant="danger" @click="deletePost">Eliminar</o-button>
+            <div class="mr-3"></div>
+            <o-button @click="confirmDeleteActive = false">Cancelar</o-button>
+        </template>
+    </confirmation-modal>
+
     <AppLayout>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="container mt-5">
@@ -42,7 +57,9 @@
                                         <td class="p-2">{{ p.type }}</td>
                                         <td class="p-2">
                                             <Link as="button" class="text-sm text-purple-400 hover:text-purple-700 mx-2" :href="route('post.edit', p.id)">Editar</Link>
-                                            <Link as="button" class="text-sm text-red-400 hover:text-red-700 mx-2" method="delete" :href="route('post.destroy', p.id)">Eliminar</Link>
+                                            <!-- <Link as="button" class="text-sm text-red-400 hover:text-red-700 mx-2" method="delete" :href="route('post.destroy', p.id)">Eliminar</Link> -->
+                                            <button class="text-sm text-red-400 hover:text-red-700 mx-2"
+                                                @click="confirmDeleteActive = true;deletePostRow = p.id;">Eliminar</button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -63,18 +80,36 @@
 
 <script>
     import { Link, router } from '@inertiajs/vue3';
+    import { ref } from "vue";
 
     import AppLayout from "@/Layouts/AppLayout.vue";
     import Pagination from '@/Shared/Pagination.vue';
+    import ConfirmationModal from "@/Components/ConfirmationModal.vue";
     
     export default {
+        data() {
+            return {
+                confirmDeleteActive: false,
+                deletePostRow: "",
+            }
+        }, 
+        methods: {
+            deletePost() {
+                router.delete(route("post.destroy", this.deletePostRow));
+                this.confirmDeleteActive = false;
+            }, 
+        },
         components: {
             Link,
             AppLayout,
             Pagination,
+            ConfirmationModal
         },
         props: {
             posts: Object,
+        },
+        setup(props) {
+
         }
     }
 </script>

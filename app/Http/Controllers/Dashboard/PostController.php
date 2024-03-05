@@ -97,6 +97,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        Storage::disk('public_upload')->delete("image/post/".$post->image);
         $post->delete();
         return to_route('post.index')->with('message', 'Post eliminado con exito.');
     }

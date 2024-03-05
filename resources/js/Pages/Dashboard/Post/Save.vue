@@ -59,8 +59,8 @@
                     <InputError :message="errors.posted"/>
 
                     <div v-for="value in enumPosted" :key="value" :value="value">
-                        <input type="radio" id="enumPosted" name="enumPosted" :value="value" v-model="form.posted">
-                        <label for="enumPosted" class="ml-3">{{ value }}</label><br>
+                        <input type="radio" :id="value" :name="value" :value="value" v-model="form.posted">
+                        <label :for="value" class="ml-3">{{ value }}</label><br>
                     </div>
                 </div>
 
@@ -69,8 +69,8 @@
                     <InputError :message="errors.type"/>
 
                     <div v-for="value in enumType" :key="value" :value="value">
-                        <input type="radio" id="enumType" name="enumType" :value="value" v-model="form.type">
-                        <label for="enumType" class="ml-3">{{ value }}</label><br>
+                        <input type="radio" :id="value" :name="value" :value="value" v-model="form.type">
+                        <label :for="value" class="ml-3">{{ value }}</label><br>
                     </div>
                 </div>
 
@@ -241,10 +241,10 @@ export default {
                 });
         }
 
-        watch(() => form.image, (value) => {
+        /* watch(() => form.image, (value) => {
             console.log(value);
         },
-            { deep: true });
+            { deep: true }); */
 
         // Subir imagen al cargarla
         watch(() => formImage, (currentFile) => {

@@ -1,10 +1,14 @@
 <?php
 
-use App\Http\Controllers\Dashboard\CategoryController;
-use App\Http\Controllers\Dashboard\PostController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
+use App\Http\Controllers\Author\DetailController;
+use App\Http\Controllers\Author\PersonController;
+use App\Http\Controllers\Author\CompanyController;
+use App\Http\Controllers\Author\GeneralController;
+use App\Http\Controllers\Dashboard\PostController;
+use App\Http\Controllers\Dashboard\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,4 +44,19 @@ Route::middleware([
     Route::resource('/post',                PostController::class);
     Route::post('/post/upload/{post}',      [PostController::class, 'upload'])->name('post.upload');
     Route::get('/post/file/upload/{post}',  [PostController::class, 'create_file'])->name('post.create.upload');
+});
+
+Route::group([
+    'prefix' => 'author',
+    'middleware' => [
+        'auth:sanctum',
+        config('jetstream.auth_session'),
+        'verified',
+    ]
+], function() {
+    // rutas
+    Route::resource('author-general',   GeneralController::class); // ->only(['create', ... ])
+    Route::resource('author-company',   CompanyController::class); 
+    Route::resource('author-person',    PersonController::class); 
+    Route::resource('author-detail',    DetailController::class); 
 });

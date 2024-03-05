@@ -89,8 +89,6 @@ export default {
             message: ''
         })
 
-        console.log(props);
-
         function upload(){
             router.post(route('post.upload', form.id), form);
         }

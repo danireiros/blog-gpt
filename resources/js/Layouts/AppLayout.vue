@@ -65,6 +65,9 @@ const hideFlashMessage = () => {
                                 <NavLink :href="route('category.index')" :active="route().current('category.index')">
                                     Categorias
                                 </NavLink>
+                                <NavLink :href="route('author-general.index')" :active="route().current('author-general.index')">
+                                    Autores
+                                </NavLink>
                             </div>
                         </div>
 
@@ -213,6 +216,9 @@ const hideFlashMessage = () => {
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('post.index')" :active="route().current('post.index')">
                             Posts
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('author-general.index')" :active="route().current('author-general.index')">
+                            Autores
                         </ResponsiveNavLink>
                     </div>
 
