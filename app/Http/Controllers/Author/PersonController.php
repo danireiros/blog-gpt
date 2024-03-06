@@ -34,7 +34,8 @@ class PersonController extends Controller
      */
     public function store(Person $request)
     {
-        AuthorPerson::create($request->validated());
+        $authorPerson = AuthorPerson::create($request->validated());
+        return to_route('author-general.edit', ['author_general' => $authorPerson->general->id]);
     }
 
     /**
@@ -61,6 +62,7 @@ class PersonController extends Controller
     public function update(Person $request, AuthorPerson $authorPerson)
     {
         $authorPerson->update($request->validated());
+        return to_route('author-general.edit', ['author_general' => $authorPerson->general->id]);
     }
 
     /**

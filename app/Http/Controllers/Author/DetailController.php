@@ -33,7 +33,8 @@ class DetailController extends Controller
      */
     public function store(Detail $request)
     {
-        AuthorDetail::create($request->validated());
+        $authorDetail = AuthorDetail::create($request->validated());
+        return to_route('author-general.edit', ['author_general' => $authorDetail->general->id]);
     }
 
     /**
@@ -59,6 +60,7 @@ class DetailController extends Controller
     public function update(Detail $request, AuthorDetail $authorDetail)
     {
         $authorDetail->update($request->validated());
+        return to_route('author-general.edit', ['author_general' => $authorDetail->general->id]);
     }
 
     /**

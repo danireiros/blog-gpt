@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Author;
 
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use App\Models\AuthorCompany;
 use App\Models\AuthorGeneral;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Author\General;
@@ -26,7 +27,7 @@ class GeneralController extends Controller
     public function create()
     {
         $enumType = (new AuthorGeneral())->enumType;
-        return Inertia('Author/General/Form', compact('enumType'));
+        return Inertia('Author/General/Step', compact('enumType'));
     }
 
     /**
@@ -34,7 +35,8 @@ class GeneralController extends Controller
      */
     public function store(General $request)
     {
-        AuthorGeneral::create($request->validated());
+        $authorGeneral = AuthorGeneral::create($request->validated());
+        return to_route('author-general.edit', ['author_general' => $authorGeneral]);
     }
 
     /**
@@ -50,8 +52,28 @@ class GeneralController extends Controller
      */
     public function edit(AuthorGeneral $authorGeneral)
     {
+        Inertia::share('step', time());
+
+        $authorGeneral->company;
+        $authorGeneral->person;
+        $authorGeneral->detail;
+
+        if(!$authorGeneral->company){
+            unset($authorGeneral->company);
+        }
+
+        if(!$authorGeneral->person){
+            unset($authorGeneral->person);
+        }
+
+        if(!$authorGeneral->detail){
+            unset($authorGeneral->detail);
+        }
+
         $enumType = (new AuthorGeneral())->enumType;
-        return Inertia('Author/General/Form', compact('authorGeneral', 'enumType'));
+        $enumChoices = (new AuthorCompany())->enumChoices;
+        $authors = AuthorGeneral::get();
+        return Inertia('Author/General/Step', compact('authorGeneral', 'enumType', 'enumChoices', 'authors'));
     }
 
     /**
@@ -60,6 +82,8 @@ class GeneralController extends Controller
     public function update(General $request, AuthorGeneral $authorGeneral)
     {
         $authorGeneral->update($request->validated());
+        /* return back(); */
+        return to_route('author-general.edit', ['author_general' => $authorGeneral]);
     }
 
     /**

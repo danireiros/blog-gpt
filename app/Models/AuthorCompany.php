@@ -31,6 +31,6 @@ class AuthorCompany extends Model
     public $enumChoices = ['ad', 'post', 'course', 'movie', 'other'];
 
     public function general(){
-        return $this->belongsTo(AuthorGeneral::class);
+        return $this->belongsTo(AuthorGeneral::class, 'author_general_id');
     }
 }

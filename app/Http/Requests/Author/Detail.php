@@ -22,14 +22,14 @@ class Detail extends FormRequest
      */
     public function rules(): array
     {
-        $detailId = $this->route('detail') ?? null; // Obtener el ID del registro si existe
+        /* $detailId = $this->route('detail') ?? null; // Obtener el ID del registro si existe */
 
         return [
             'details' => 'required|min:5|max:255',
             'author_general_id' => [
                 'required',
                 'exists:author_generals,id',
-                Rule::unique('author_details', 'author_general_id')->ignore($detailId),
+                /* Rule::unique('author_details', 'author_general_id')->ignore($detailId), */
             ],
         ];
     }

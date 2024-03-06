@@ -24,6 +24,6 @@ class AuthorDetail extends Model
     ];
 
     public function general(){
-        return $this->belongsTo(AuthorGeneral::class);
+        return $this->belongsTo(AuthorGeneral::class, 'author_general_id');
     }
 }

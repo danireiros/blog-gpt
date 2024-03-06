@@ -22,7 +22,7 @@ class Company extends FormRequest
      */
     public function rules(): array
     {
-        $companyId = $this->route('company') ?? null; // Obtener el ID del registro si existe
+        /* $companyId = $this->route('company') ?? null;  */
 
         return [
             //'name' => 'required|min:5|max:255',
@@ -33,7 +33,6 @@ class Company extends FormRequest
             'author_general_id' => [
                 'required',
                 'exists:author_generals,id',
-                Rule::unique('author_companies', 'author_general_id')->ignore($companyId),
             ],
             'choices' => 'required',
         ];

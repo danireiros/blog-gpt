@@ -19,7 +19,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h2 class="mb-2 text-xl font-semibold text-gray-900 dark:text-white">Categorias</h2>
-                        <Link class="link-button-default mb-3" :href="route('category.create')">Crear</Link>
+                        <Link class="link-button-default mb-3 hover:text-gray-100" :href="route('category.create')">Crear</Link>
                         <div v-if="categories.data.length > 0">
                             <table class="w-full border">
                                 <thead class="bg-gray-200">

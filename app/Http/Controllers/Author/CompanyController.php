@@ -33,7 +33,8 @@ class CompanyController extends Controller
      */
     public function store(Company $request)
     {
-        AuthorCompany::create($request->validated());
+        $authorCompany = AuthorCompany::create($request->validated());
+        return to_route('author-general.edit', ['author_general' => $authorCompany->general->id]);
     }
 
     /**
@@ -60,6 +61,7 @@ class CompanyController extends Controller
     public function update(Company $request, AuthorCompany $authorCompany)
     {
         $authorCompany->update($request->validated());
+        return to_route('author-general.edit', ['author_general' => $authorCompany->general->id]);
     }
 
     /**

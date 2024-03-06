@@ -30,7 +30,7 @@ class Person extends FormRequest
      */
     public function rules(): array
     {
-        $personId = $this->route('person') ?? null; // Obtener el ID del registro si existe
+        /* $personId = $this->route('person') ?? null; // Obtener el ID del registro si existe */
 
         return [
             'other' => 'required|min:5|max:255',
@@ -39,7 +39,7 @@ class Person extends FormRequest
             'author_general_id' => [
                 'required',
                 'exists:author_generals,id',
-                Rule::unique('author_persons', 'author_general_id')->ignore($personId),
+                /* Rule::unique('author_persons', 'author_general_id')->ignore($personId), */
             ],
         ];
     }

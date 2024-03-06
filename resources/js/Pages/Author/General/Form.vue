@@ -1,5 +1,5 @@
 <template>
-    <AppLayout>
+    <!-- <AuthorLayout> -->
         <FormSection @submitted="submit" class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
             <template #title>
                 <span v-if="form.id == ''">Crear </span>
@@ -43,14 +43,13 @@
                 </PrimaryButton>
             </template>
         </FormSection>
-
-    </AppLayout>
+    <!-- </AuthorLayout> -->
 </template>
 
 <script>
 import { Link, useForm, router } from "@inertiajs/vue3";
 
-import AppLayout from "@/Layouts/AppLayout.vue";
+/* import AuthorLayout from "@/Layouts/AuthorLayout.vue"; */
 import FormSection from "@/Components/FormSection.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import TextInput from "@/Components/TextInput.vue";
@@ -65,7 +64,7 @@ const file = ref(null);
 export default {
     components:{
         Link,
-        AppLayout,
+        /* AuthorLayout, */
         FormSection,
         InputLabel,
         TextInput,
