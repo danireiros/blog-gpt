@@ -11,7 +11,7 @@ class Person extends FormRequest
     {
         if (str($this->username)->trim() == "")
             $this->merge([
-                'username' => str($this->username)->username()
+                'username' => str($this->username)->slug()
             ]);
     }
 

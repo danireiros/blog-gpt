@@ -26,8 +26,8 @@
                     <InputLabel for="">Autor general</InputLabel>
                     <InputError :message="errors.author_general_id"/>
 
-                    <select class="rounded-md w-full border-gray-300" v-model="form.author_general_id">
-                        <option v-for="ag in authors" :key="ag.id" :value="ag.id" :selected="authorCompany.author_general_id === ag.id">
+                    <select class="rounded-md w-full border-gray-300" v-model="form.author_general_id" disabled="disabled" readonly>
+                        <option v-for="ag in authors" :key="ag.id" :value="ag.id" :selected="generalId === ag.id">
                             {{ ag.name }}
                         </option>
                     </select>
@@ -50,6 +50,7 @@
                 </div>
             </template>
             <template #actions>
+                <span class="m-3 cursor-pointer hover:text-gray-500" @click="$emit('backStepEvent', 1)">Atras</span>
                 <PrimaryButton class="mt-1" type="submit">
                     <span v-if="form.id == ''">Siguiente <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 inline">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
@@ -114,7 +115,12 @@ export default {
         },
         authors: Object,
         enumChoices: Array,
+        generalId: {
+            type: Number,
+            default: 0,
+        },
     },
+    emits: ['backStepEvent'],
     setup(props) {
         const form = useForm({
             id: props.authorCompany.id,
@@ -122,7 +128,7 @@ export default {
             email: props.authorCompany.email,
             extra: props.authorCompany.extra,
             image: props.authorCompany.image,
-            author_general_id: props.authorCompany.author_general_id,
+            author_general_id: props.generalId,
             choices: props.authorCompany.choices,
         })
 
@@ -136,7 +142,7 @@ export default {
                     email: form.email,
                     extra: form.extra,
                     image: form.image,
-                    author_general_id: form.author_general_id,
+                    author_general_id: props.generalId,
                     choices: form.choices,
                 });
             }else
@@ -147,7 +153,7 @@ export default {
                     email: form.email,
                     extra: form.extra,
                     image: form.image,
-                    author_general_id: form.author_general_id,
+                    author_general_id: props.generalId,
                     choices: form.choices,
                 });
         }

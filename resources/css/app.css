@@ -50,3 +50,13 @@
 .v-leave-to {
     opacity: 0;
 }
+
+/* STEP */
+
+.form-step {
+    @apply font-medium px-6 border-b-2 tracking-wider py-2
+}
+
+.active {
+    @apply border-indigo-500 rounded-t  bg-indigo-100
+}

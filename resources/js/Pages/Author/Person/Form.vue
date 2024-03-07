@@ -14,8 +14,8 @@
                     <InputLabel for="">Autor general</InputLabel>
                     <InputError :message="errors.author_general_id"/>
 
-                    <select class="rounded-md w-full border-gray-300" v-model="form.author_general_id">
-                        <option v-for="ag in authors" :key="ag.id" :value="ag.id" :selected="authorPerson.author_general_id === ag.id">
+                    <select class="rounded-md w-full border-gray-300" v-model="form.author_general_id" disabled="disabled" readonly>
+                        <option v-for="ag in authors" :key="ag.id" :value="ag.id" :selected="generalId === ag.id">
                             {{ ag.name }}
                         </option>
                     </select>
@@ -44,6 +44,7 @@
                 </div> 
             </template>
             <template #actions>
+                <span class="m-3 cursor-pointer hover:text-gray-500" @click="$emit('backStepEvent', 1)">Atras</span>
                 <PrimaryButton class="mt-1" type="submit">
                     <span v-if="form.id == ''">Siguiente <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 inline">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
@@ -106,13 +107,20 @@ export default {
         },
         authors: Object,
         enumChoices: Array,
+        generalId: {
+            type: Number,
+            default: {
+                id: 0,
+            }
+        },
     },
+    emits: ['backStepEvent'],
     setup(props) {
         const form = useForm({
             id: props.authorPerson.id,
             other: props.authorPerson.other,
             username: props.authorPerson.username,
-            author_general_id: props.authorPerson.author_general_id,
+            author_general_id: props.generalId,
             choices: props.authorPerson.choices,
         })
 
@@ -123,7 +131,7 @@ export default {
                 router.post(route('author-person.store', form.id), {
                     other: form.other,
                     username: form.username,
-                    author_general_id: form.author_general_id,
+                    author_general_id: props.generalId,
                     choices: form.choices,
                 });
             }else
@@ -131,7 +139,7 @@ export default {
                     _method: 'put',
                     other: form.other,
                     username: form.username,
-                    author_general_id: form.author_general_id,
+                    author_general_id: props.generalId,
                     choices: form.choices,
                 });
         }

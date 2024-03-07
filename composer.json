@@ -28,7 +28,11 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+            "App/Helpers/Author.php",
+            "App/Helpers/Openai.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

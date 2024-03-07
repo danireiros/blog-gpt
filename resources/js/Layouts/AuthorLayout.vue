@@ -1,7 +1,4 @@
 <template>
-
-    <p class="m-2">Layout de Autor</p>
-
     <!-- <AppLayout> -->
         <!-- <header>
             <slot name="header"></slot>

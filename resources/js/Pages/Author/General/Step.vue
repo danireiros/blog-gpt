@@ -1,12 +1,59 @@
 <template>
     <AppLayout>
         <AuthorLayout>
-            <p class="m-2">Layout de autor (STEP.vue)</p>
-            <p class="m-2">Paso {{ $page.props.step }}</p>
-            <FormAuthor             :errors="errors" :authorGeneral="authorGeneral" :enumType="enumType"/>
-            <FormAuthorCompany      :errors="errors" :authorCompany="authorGeneral.company" :enumChoices="enumChoices" :authors="authors"/>
-            <FormAuthorPerson       :errors="errors" :authorPerson="authorGeneral.person" :enumChoices="enumChoices" :authors="authors"/>
-            <FormAuthorDetail       :errors="errors" :authorDetail="authorGeneral.detail" :authors="authors"/>
+
+            {{ $page.props.step }}
+
+            <div class="flex">
+                <div class="flex mx-auto flex-col sm:flex-row mt-2">
+                    <div class="form-step bg-white" :class="{active: $page.props.step == 1}">
+                        PASO 1
+                    </div>
+                    <div class="form-step bg-white" :class="{active: parseInt($page.props.step) == 2}">
+                        PASO 2
+                    </div>
+                    <div class="form-step bg-white" :class="{active: $page.props.step == 3}">
+                        PASO 3
+                    </div>
+                    <div class="form-step bg-white" :class="{active: $page.props.step == 4}">
+                        FIN
+                    </div>
+                </div>
+            </div>
+
+            <!-- <p class="m-2">Paso {{ $page.props.step }}</p> -->
+            <FormAuthor 
+                v-if="$page.props.step == 1" 
+                :errors="errors" 
+                :authorGeneral="authorGeneral" 
+                :enumType="enumType"/>
+            <FormAuthorCompany 
+                @back-step-event="backStep"
+                v-if="$page.props.step == 2.5" 
+                :errors="errors" 
+                :authorCompany="authorGeneral.company" 
+                :enumChoices="enumChoices" 
+                :authors="authors" 
+                :generalId="authorGeneral.id"/>
+            <FormAuthorPerson 
+                @back-step-event="backStep"
+                v-if="$page.props.step == 2" 
+                :errors="errors" 
+                :authorPerson="authorGeneral.person" 
+                :enumChoices="enumChoices" 
+                :authors="authors" 
+                :generalId="authorGeneral.id"/>
+            <FormAuthorDetail 
+                v-if="$page.props.step == 3" 
+                :errors="errors" 
+                :backStep="authorGeneral.type == 'person' ? 2 : 2.5"
+                :authorDetail="authorGeneral.detail" 
+                :authors="authors" 
+                :generalId="authorGeneral.id"
+                @back-step-event="backStep"/>
+            <div v-if="$page.props.step == 4" class="p-3 m-3 bg-orange-100">
+                Autor finalizado
+            </div>
         </AuthorLayout>
     </AppLayout>
 </template>
@@ -20,6 +67,11 @@ import FormAuthorPerson from "@/Pages/Author/Person/Form.vue";
 import FormAuthorDetail from "@/Pages/Author/Detail/Form.vue";
 
 export default {
+    methods: {
+        backStep(value){
+            this.$page.props.step = value;
+        }
+    },      
     components: {
         AuthorLayout,  
         AppLayout,

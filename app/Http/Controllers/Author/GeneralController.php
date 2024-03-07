@@ -26,6 +26,7 @@ class GeneralController extends Controller
      */
     public function create()
     {
+        Inertia::share('step', getStep());
         $enumType = (new AuthorGeneral())->enumType;
         return Inertia('Author/General/Step', compact('enumType'));
     }
@@ -52,7 +53,7 @@ class GeneralController extends Controller
      */
     public function edit(AuthorGeneral $authorGeneral)
     {
-        Inertia::share('step', time());
+        Inertia::share('step', getStep($authorGeneral));
 
         $authorGeneral->company;
         $authorGeneral->person;
