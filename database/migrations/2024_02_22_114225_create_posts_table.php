@@ -23,6 +23,7 @@ return new class extends Migration
             $table->enum('posted', ['yes', 'not'])->default('not');
             $table->enum('type', ['ad', 'post', 'course', 'movie'])->default('post');
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
+            $table->foreignId('author_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

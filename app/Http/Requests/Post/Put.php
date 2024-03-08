@@ -33,6 +33,7 @@ class Put extends FormRequest
             'title' => 'required|min:5|max:255',
             'slug' => 'required|min:5|max:255|unique:posts,slug,' . $this->route("post")->id,
             'category_id' => 'required|exists:categories,id',
+            'author_id' => 'required|exists:authors,id',
             'text' => 'required|min:5',
             'description' => 'required|min:5|max:255',
 

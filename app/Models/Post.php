@@ -18,7 +18,8 @@ class Post extends Model
         'description',
         'posted',
         'type',
-        'category_id'
+        'category_id',
+        'author_id'
     ];
 
     public $enumPosted = ['yes', 'not'];
@@ -26,6 +27,10 @@ class Post extends Model
 
     public function category(){
         return $this->belongsTo(Category::class);
+    }
+
+    public function author(){
+        return $this->belongsTo(Author::class);
     }
 
     public function tags(){

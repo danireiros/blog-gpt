@@ -56,16 +56,16 @@ const hideFlashMessage = () => {
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                                <!-- <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
-                                </NavLink>
+                                </NavLink> -->
                                 <NavLink :href="route('post.index')" :active="route().current('post.index')">
                                     Posts
                                 </NavLink>
                                 <NavLink :href="route('category.index')" :active="route().current('category.index')">
                                     Categorias
                                 </NavLink>
-                                <NavLink :href="route('author-general.index')" :active="route().current('author-general.index')">
+                                <NavLink :href="route('author.index')" :active="route().current('author.index')">
                                     Autores
                                 </NavLink>
                             </div>
@@ -208,16 +208,16 @@ const hideFlashMessage = () => {
                 <!-- Responsive Navigation Menu -->
                 <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                        <!-- <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
-                        </ResponsiveNavLink>
+                        </ResponsiveNavLink> -->
                         <ResponsiveNavLink :href="route('category.index')" :active="route().current('category.index')">
                             Categorias
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('post.index')" :active="route().current('post.index')">
                             Posts
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('author-general.index')" :active="route().current('author-general.index')">
+                        <ResponsiveNavLink :href="route('author.index')" :active="route().current('author.index')">
                             Autores
                         </ResponsiveNavLink>
                     </div>

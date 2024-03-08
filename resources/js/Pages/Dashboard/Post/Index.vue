@@ -28,11 +28,12 @@
                                         <!-- <th class="p-3">ID</th> -->
                                         <th class="p-3">Titulo</th>
                                         <th class="p-3">Slug</th>
+                                        <th class="p-3">Autor</th>
                                         <th class="p-3">Categoría</th>
                                         <th class="p-3">Descripción</th>
                                         <th class="p-3">Publicado</th>
                                         <th class="p-3">Tipo</th>
-                                        <th class="p-3">Actions</th>
+                                        <th class="p-3">#</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -40,6 +41,7 @@
                                         <!-- <td class="p-2">{{ p.id }}</td> -->
                                         <td class="p-2">{{ p.title }}</td>
                                         <td class="p-2">{{ p.slug }}</td>
+                                        <td class="p-2">{{ p.author.name }}</td>
                                         <td class="p-2">{{ p.category.title }}</td>
                                         <td class="p-2">{{ p.description }}</td>
                                         <td class="p-2">

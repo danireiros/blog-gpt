@@ -3,11 +3,11 @@
         <template v-slot:title> Confirme la acción </template>
 
         <template v-slot:content>
-            <p>¿Seguro que quieres eliminar la categoría?</p>
+            <p>¿Seguro que quieres eliminar el autor?</p>
         </template>
 
         <template v-slot:footer>
-            <o-button variant="danger" @click="deleteCategory">Eliminar</o-button>
+            <o-button variant="danger" @click="deleteAuthor">Eliminar</o-button>
             <div class="mr-3"></div>
             <o-button @click="confirmDeleteActive = false">Cancelar</o-button>
         </template>
@@ -18,38 +18,47 @@
             <div class="container mt-5">
                 <div class="card">
                     <div class="card-body">
-                        <h2 class="mb-2 text-xl font-semibold text-gray-900 dark:text-white">Categorias</h2>
-                        <Link class="link-button-default mb-3 hover:text-gray-100" :href="route('category.create')">Crear</Link>
-                        <div v-if="categories.data.length > 0">
+                        <h2 class="mb-2 text-xl font-semibold text-gray-900 dark:text-white">Autores</h2>
+                        <Link class="link-button-default mb-3 hover:text-gray-100" :href="route('author.create')">Crear</Link>
+                        <div v-if="authors.data.length > 0">
                             <table class="w-full border">
                                 <thead class="bg-gray-200">
                                     <tr class="border-b">
                                         <th class="p-3">ID</th>
-                                        <th class="p-3">Titulo</th>
-                                        <th class="p-3">Slug</th>
+                                        <th class="p-3">Imagen</th>
+                                        <th class="p-3">Nombre</th>
+                                        <th class="p-3">Descripcion</th>
+                                        <th class="p-3">Prompt</th>
+                                        <th class="p-3">Categoria</th>
+                                        <th class="p-3">SubCategoria</th>
                                         <th class="p-3">#</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="border-b" v-for="c in categories.data" :key="c.id">
-                                        <td class="p-2">{{ c.id }}</td>
-                                        <td class="p-2">{{ c.title }}</td>
-                                        <td class="p-2">{{ c.slug }}</td>
+                                    <tr class="border-b" v-for="a in authors.data" :key="a.id">
+                                        <td class="p-2">{{ a.id }}</td>
                                         <td class="p-2">
-                                            <Link as="button" class="text-sm text-purple-400 hover:text-purple-700 mx-2" :href="route('category.edit', c.id)">Editar</Link>
-                                            <!-- <Link as="button" class="text-sm text-red-400 hover:text-red-700 mx-2" method="delete" :href="route('category.destroy', c.id)">Eliminar</Link> -->
+                                            <img class="h-16 w-16 rounded-full" :src="'/image/author/'+a.image">
+                                        </td>
+                                        <td class="p-2 font-bold">{{ a.name }}</td>
+                                        <td class="p-2">{{ a.description }}</td>
+                                        <td class="p-2">{{ a.system_prompt }}</td>
+                                        <td class="p-2">{{ a.category.title }}</td>
+                                        <td class="p-2">{{ a.subcategory }}</td>
+                                        <td class="p-2">
+                                            <Link as="button" class="text-sm text-purple-400 hover:text-purple-700 mx-2" :href="route('author.edit', a.id)">Editar</Link>
                                             <button class="text-sm text-red-400 hover:text-red-700 mx-2"
-                                                    @click="confirmDeleteActive = true; deleteCategoryRow = c.id;">Eliminar</button>
+                                                    @click="confirmDeleteActive = true; deleteAuthorRow = a.id;">Eliminar</button>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
 
-                            <pagination :links="categories"/>
+                            <pagination :links="authors"/>
                         </div>
                         <div v-else>
                             <div class="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4" role="alert">
-                                <p>No hay categorias</p>
+                                <p>No hay autores</p>
                             </div>
                         </div>
                     </div>
@@ -70,12 +79,12 @@
         data() {
             return {
                 confirmDeleteActive: false,
-                deleteCategoryRow: "",
+                deleteAuthorRow: "",
             }
         }, 
         methods: {
-            deleteCategory() {
-                router.delete(route("category.destroy", this.deleteCategoryRow));
+            deleteAuthor() {
+                router.delete(route("author.destroy", this.deleteAuthorRow));
                 this.confirmDeleteActive = false;
             }, 
         },
@@ -86,7 +95,7 @@
             ConfirmationModal
         },
         props: {
-            categories: Object,
+            authors: Object,
         }
     }
 </script>

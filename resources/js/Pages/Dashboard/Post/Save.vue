@@ -30,6 +30,17 @@
                 </div>
 
                 <div class="col-span-6">
+                    <InputLabel for="">Autor</InputLabel>
+                    <InputError :message="errors.author_id"/>
+
+                    <select class="rounded-md w-full border-gray-300" v-model="form.author_id">
+                        <option v-for="a in authors" :key="a.id" :value="a.id" :selected="post.author_id === a.id">
+                            {{ a.name }}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="col-span-6">
                     <InputLabel for="">Categoría</InputLabel>
                     <InputError :message="errors.category_id"/>
 
@@ -187,6 +198,7 @@ export default {
                 id: "",
                 title: "",
                 slug: "",
+                author_id: "",
                 category_id: "",
                 description: "",
                 text: "",
@@ -196,6 +208,7 @@ export default {
                 formImage: "",
             }
         },
+        authors: Object,
         categories: Object,
         enumPosted: Array,
         enumType: Array,
@@ -205,6 +218,7 @@ export default {
             id: props.post.id,
             title: props.post.title,
             slug: props.post.slug,
+            author_id: props.post.author_id,
             category_id: props.post.category_id,
             description: props.post.description,
             text: props.post.text,
@@ -220,6 +234,7 @@ export default {
                 router.post(route('post.store', form.id), {
                     title: form.title,
                     slug: form.slug,
+                    author_id: form.author_id,
                     category_id: form.category_id,
                     description: form.description,
                     text: form.text,
@@ -232,6 +247,7 @@ export default {
                     _method: 'put',
                     title: form.title,
                     slug: form.slug,
+                    author_id: form.author_id,
                     category_id: form.category_id,
                     description: form.description,
                     text: form.text,

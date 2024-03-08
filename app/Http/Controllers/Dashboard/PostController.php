@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Post;
 use Inertia\Inertia;
+use App\Models\Author;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\Post\Put;
@@ -18,7 +19,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('category')->paginate(2);
+        $posts = Post::with(['category', 'author'])->paginate(2);
         return Inertia::render('Dashboard/Post/Index', compact('posts'));
     }
 
@@ -28,9 +29,10 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
+        $authors = Author::all();
         $enumPosted = (new Post())->enumPosted;
         $enumType = (new Post())->enumType;
-        return Inertia::render('Dashboard/Post/Save', compact('categories', 'enumPosted', 'enumType'));
+        return Inertia::render('Dashboard/Post/Save', compact('categories', 'enumPosted', 'enumType', 'authors'));
     }
 
     /**
@@ -72,11 +74,12 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $categories = Category::all();
-        $post = Post::with('category')->find($post)->first();
+        $authors = Author::all();
+        $post = Post::with(['category', 'author'])->find($post)->first();
         $enumPosted = (new Post())->enumPosted;
         $enumType = (new Post())->enumType;
         //return Inertia::render('Dashboard/Post/Edit', compact('post', 'categories', 'enumPosted', 'enumType'));
-        return Inertia::render('Dashboard/Post/Save', compact('post', 'categories', 'enumPosted', 'enumType'));
+        return Inertia::render('Dashboard/Post/Save', compact('post', 'authors', 'categories', 'enumPosted', 'enumType'));
     }
 
     /**

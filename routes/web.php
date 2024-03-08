@@ -1,8 +1,10 @@
 <?php
 
 use Inertia\Inertia;
+use App\Http\Requests\Author\Author;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
+use App\Http\Controllers\Dashboard\AuthorController;
 use App\Http\Controllers\Author\DetailController;
 use App\Http\Controllers\Author\PersonController;
 use App\Http\Controllers\Author\CompanyController;
@@ -40,6 +42,7 @@ Route::middleware([
     })->name('dashboard');
 
     // rutas
+    Route::resource('/author',              AuthorController::class);
     Route::resource('/category',            CategoryController::class);
     Route::resource('/post',                PostController::class);
     Route::post('/post/upload/{post}',      [PostController::class, 'upload'])->name('post.upload');

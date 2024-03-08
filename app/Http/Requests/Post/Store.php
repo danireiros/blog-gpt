@@ -33,6 +33,7 @@ class Store extends FormRequest
             'title' => 'required|min:5|max:255',
             'slug' => 'required|min:5|max:255|unique:categories',
             'category_id' => 'required|exists:categories,id',
+            'author_id' => 'required|exists:authors,id',
             'text' => 'required|min:5',
             'description' => 'required|min:5|max:255',
 
