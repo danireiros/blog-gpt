@@ -6,6 +6,10 @@ import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 
+// PLUGINS
+// de bounce
+import vueDebounce from 'vue-debounce'
+
 // oruga
 import Oruga from '@oruga-ui/oruga-next';
 import { bulmaConfig } from '@oruga-ui/theme-bulma'
@@ -26,6 +30,7 @@ createInertiaApp({
             .use(ZiggyVue)
             .use(Oruga, bulmaConfig)
             .use(CKEditor)
+            .directive('debounce', vueDebounce({ lock: true }))
             .mount(el);
     },
     progress: {

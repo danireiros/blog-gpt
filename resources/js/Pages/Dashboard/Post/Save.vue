@@ -2,6 +2,9 @@
     <AppLayout>
         <FormSection @submitted="submit" class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
             <template #title>
+                <div v-if="form.title" class="w-full">
+                    <h2 class="mb-2 text-xl font-semibold text-gray-900 dark:text-white">{{ form.title }}</h2>
+                </div>
                 <span v-if="form.id == ''">Crear </span>
                 <span v-else>Actualizar </span>post
             </template>
@@ -140,6 +143,11 @@
                     </section> -->
                 </div>
 
+                <div v-if="post.created_at" class="col-span-6">
+                    <InputLabel for="">Fecha de creación</InputLabel>
+                    <p>{{ formatDate(post.created_at) }}</p>
+                </div> 
+
             </template>
             <template #actions>
                 <PrimaryButton class="mt-1" type="submit">
@@ -171,6 +179,21 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 const file = ref(null);
 
 export default {
+    methods: {
+        formatDate(dateString) {
+            const date = new Date(dateString);
+            let options = {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+                second: "numeric",
+                hour12: false,
+            };
+            return new Intl.DateTimeFormat(undefined, options).format(date);
+        }
+    },
     components:{
         Link,
         AppLayout,
@@ -204,6 +227,7 @@ export default {
                 text: "",
                 posted: "",
                 type: "",
+                created_at: "",
                 image: "",
                 formImage: "",
             }

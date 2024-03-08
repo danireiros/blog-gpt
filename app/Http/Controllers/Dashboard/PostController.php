@@ -19,8 +19,61 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with(['category', 'author'])->paginate(5);
-        return Inertia::render('Dashboard/Post/Index', compact('posts'));
+        /* $posts = Post::with(['category', 'author'])->paginate(5); */
+        $categories = Category::all();
+        $authors = Author::all();
+        $enumPosted = (new Post())->enumPosted;
+        $enumType = (new Post())->enumType;
+
+        $posts = Post::with(['category', 'author']);
+
+        $filter_author_id = request('author_id');
+        $filter_category_id = request('category_id');
+        $filter_type = request('type');
+        $filter_posted = request('posted');
+        $filter_search = request('search');
+        $filter_from = request('from');
+        $filter_to = request('to');
+
+        if($filter_author_id)
+            $posts->where('author_id', $filter_author_id);
+
+        if($filter_category_id)
+            $posts->where('category_id', $filter_category_id);
+
+        if($filter_type)
+            $posts->where('type', $filter_type);
+
+        if($filter_posted)
+            $posts->where('posted', $filter_posted);
+
+        if($filter_search){
+            $posts->where(function($query) use ($filter_search) {
+                $query->orWhere('title', 'like', '%'.$filter_search.'%');
+                $query->orWhere('description', 'like', '%'.$filter_search.'%');
+            });
+        }
+
+        if($filter_from && $filter_to){
+            $posts->whereBetween('created_at', [request('from'), request('to')]);
+        }
+
+        $posts = $posts->paginate(5);
+
+        return Inertia::render('Dashboard/Post/Index', compact(
+            'posts', 
+            'categories', 
+            'enumPosted', 
+            'enumType', 
+            'authors',
+            'filter_author_id',
+            'filter_category_id',
+            'filter_type',
+            'filter_posted',
+            'filter_search',
+            'filter_from',
+            'filter_to',
+        ));
     }
 
     /**
