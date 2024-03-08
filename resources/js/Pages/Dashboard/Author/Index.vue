@@ -30,7 +30,7 @@
                                         <th class="p-3">Descripcion</th>
                                         <th class="p-3">Prompt</th>
                                         <th class="p-3">Categoria</th>
-                                        <th class="p-3">SubCategoria</th>
+                                        <th class="p-3">Subcategoria</th>
                                         <th class="p-3">#</th>
                                     </tr>
                                 </thead>

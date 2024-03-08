@@ -33,7 +33,7 @@
                                 <tbody>
                                     <tr class="border-b" v-for="c in categories.data" :key="c.id">
                                         <td class="p-2">{{ c.id }}</td>
-                                        <td class="p-2">{{ c.title }}</td>
+                                        <td class="p-2 font-bold">{{ c.title }}</td>
                                         <td class="p-2">{{ c.slug }}</td>
                                         <td class="p-2">
                                             <Link as="button" class="text-sm text-purple-400 hover:text-purple-700 mx-2" :href="route('category.edit', c.id)">Editar</Link>

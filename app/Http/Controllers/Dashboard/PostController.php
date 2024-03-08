@@ -19,7 +19,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with(['category', 'author'])->paginate(2);
+        $posts = Post::with(['category', 'author'])->paginate(5);
         return Inertia::render('Dashboard/Post/Index', compact('posts'));
     }
 
