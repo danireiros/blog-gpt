@@ -36,7 +36,7 @@ const hideFlashMessage = () => {
 </script>
 
 <template>
-    <div>
+    <div class="overflow-y-auto" scroll-region>
         <Head :title="title" />
 
         <Banner />
@@ -67,6 +67,9 @@ const hideFlashMessage = () => {
                                 </NavLink>
                                 <NavLink :href="route('author.index')" :active="route().current('author.index')">
                                     Autores
+                                </NavLink>
+                                <NavLink :href="route('openai.index')" :active="route().current('openai.index')">
+                                    OpenAi
                                 </NavLink>
                             </div>
                         </div>
@@ -219,6 +222,9 @@ const hideFlashMessage = () => {
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('author.index')" :active="route().current('author.index')">
                             Autores
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('openai.index')" :active="route().current('openai.index')">
+                            OpenAi
                         </ResponsiveNavLink>
                     </div>
 

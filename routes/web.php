@@ -11,6 +11,7 @@ use App\Http\Controllers\Author\CompanyController;
 use App\Http\Controllers\Author\GeneralController;
 use App\Http\Controllers\Dashboard\PostController;
 use App\Http\Controllers\Dashboard\CategoryController;
+use App\Http\Controllers\OpenAi\PostController as OpenAiPostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,6 +48,9 @@ Route::middleware([
     Route::resource('/post',                PostController::class);
     Route::post('/post/upload/{post}',      [PostController::class, 'upload'])->name('post.upload');
     Route::get('/post/file/upload/{post}',  [PostController::class, 'create_file'])->name('post.create.upload');
+
+    Route::get('/openai',                   [OpenAiPostController::class, 'index'])->name('openai.index');
+    Route::get('/openai/completion',        [OpenAiPostController::class, 'postCompletion'])->name('openai.completion');
 });
 
 Route::group([

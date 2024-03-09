@@ -91,13 +91,37 @@
                             <table class="w-full border">
                                 <thead class="bg-gray-200">
                                     <tr class="border-b">
-                                        <!-- <th class="p-3">ID</th> -->
+                                        <th class="p-3 min-w-14 hover:bg-gray-300 cursor-pointer" @click="sort('id')">
+                                            Id
+                                            <template v-if="sortColumn == 'id'">
+                                                <template v-if="sortDirection == 'desc'">&uarr;</template>
+                                                <template v-else>&darr;</template>
+                                            </template>
+                                        </th>
                                         <th class="p-3">Autor</th>
-                                        <th class="p-3">Titulo</th>
-                                        <!-- <th class="p-3">Slug</th> -->                                        
+                                        <th class="p-3 hover:bg-gray-300 cursor-pointer" @click="sort('title')">
+                                            Titulo
+                                            <template v-if="sortColumn == 'title'">
+                                                <template v-if="sortDirection == 'desc'">&uarr;</template>
+                                                <template v-else>&darr;</template>
+                                            </template>
+                                        </th>
+                                        <!-- <th class="p-3">Slug</th> -->   
+                                        <th class="p-3 hover:bg-gray-300 cursor-pointer" @click="sort('text')">
+                                            Texto
+                                            <template v-if="sortColumn == 'text'">
+                                                <template v-if="sortDirection == 'desc'">&uarr;</template>
+                                                <template v-else>&darr;</template>
+                                            </template>
+                                        </th>
+                                        <th class="p-3 hover:bg-gray-300 cursor-pointer" @click="sort('description')">
+                                            Descripción
+                                            <template v-if="sortColumn == 'description'">
+                                                <template v-if="sortDirection == 'desc'">&uarr;</template>
+                                                <template v-else>&darr;</template>
+                                            </template>
+                                        </th>
                                         <th class="p-3">Categoría</th>
-                                        <th class="p-3">Texto</th>
-                                        <th class="p-3">Descripción</th>
                                         <th class="p-3">Publicado</th>
                                         <th class="p-3">Tipo</th>
                                         <th class="p-3">#</th>
@@ -105,16 +129,16 @@
                                 </thead>
                                 <tbody>
                                     <tr class="border-b" v-for="p in posts.data" :key="p.id">
-                                        <!-- <td class="p-2">{{ p.id }}</td> -->
+                                        <td class="p-2">{{ p.id }}</td>
                                         <td class="p-2">
                                             <span><img class="h-8 w-8 rounded-full" :src="'/image/author/'+p.author.image">
                                             {{ p.author.name }}</span>
                                         </td>
                                         <td class="p-2 font-bold">{{ p.title }}</td>
                                         <!-- <td class="p-2">{{ p.slug }}</td> -->
-                                        <td class="p-2">{{ p.category.title }}</td>
                                         <td class="p-2">{{ p.text.substring(0, 15)+"..." }}</td>
                                         <td class="p-2">{{ p.description.substring(0, 15)+"..." }}</td>
+                                        <td class="p-2">{{ p.category.title }}</td>
                                         <td class="p-2">
                                             <div v-if="p.posted == 'yes'">
                                                 <span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">
@@ -180,6 +204,8 @@
             filter_search: String,
             filter_from: String,
             filter_to: String,
+            sortColumn: String,
+            sortDirection: String, 
         },
         data(props) {
             return {
@@ -192,6 +218,7 @@
                 search: props.filter_search,
                 from: props.filter_from,
                 to: props.filter_to,
+                column: '',
             }
         }, 
         methods: {
@@ -199,7 +226,7 @@
                 router.delete(route("post.destroy", this.deletePostRow));
                 this.confirmDeleteActive = false;
             }, 
-            customSearch() {
+            customSearch(column = 'id') {
                 router.get(route('post.index'),{
                     category_id: this.category_id,
                     author_id: this.author_id,
@@ -208,7 +235,16 @@
                     search: this.search,
                     from: this.from,
                     to: this.to,
+                    sortColumn: this.column,
+                    sortDirection: this.sortDirection == 'asc' ? 'desc' : 'asc',
+                }, {
+                    preserveState: true,
+                    preserveScroll: true
                 });
+            },
+            sort(column){
+                this.column = column;
+                this.customSearch();
             }
         },
         components: {

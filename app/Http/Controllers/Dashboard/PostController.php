@@ -25,7 +25,11 @@ class PostController extends Controller
         $enumPosted = (new Post())->enumPosted;
         $enumType = (new Post())->enumType;
 
-        $posts = Post::with(['category', 'author']);
+        // ordenacion
+        $sortColumn = request('sortColumn') ?? 'id';
+        $sortDirection = request('sortDirection') ?? 'desc';
+
+        $posts = Post::with(['category', 'author'])->orderBy($sortColumn, $sortDirection);
 
         $filter_author_id = request('author_id');
         $filter_category_id = request('category_id');
@@ -51,6 +55,7 @@ class PostController extends Controller
             $posts->where(function($query) use ($filter_search) {
                 $query->orWhere('title', 'like', '%'.$filter_search.'%');
                 $query->orWhere('description', 'like', '%'.$filter_search.'%');
+                $query->orWhere('text', 'like', '%'.$filter_search.'%');
             });
         }
 
@@ -61,6 +66,8 @@ class PostController extends Controller
         $posts = $posts->paginate(5);
 
         return Inertia::render('Dashboard/Post/Index', compact(
+            'sortColumn', 
+            'sortDirection', 
             'posts', 
             'categories', 
             'enumPosted', 
