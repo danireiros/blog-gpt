@@ -14,14 +14,6 @@ defineProps({
 
 const showingNavigationDropdown = ref(false);
 
-const switchToTeam = (team) => {
-    router.put(route('current-team.update'), {
-        team_id: team.id,
-    }, {
-        preserveState: false,
-    });
-};
-
 const logout = () => {
     router.post(route('logout'));
 };
@@ -49,93 +41,22 @@ const hideFlashMessage = () => {
                         <div class="flex">
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
-                                <Link :href="route('post.index')">
-                                    <ApplicationMark class="block h-9 w-auto" />
+                                <Link :href="route('blog.index')">
+                                    <ApplicationMark class="block h-9 w-auto" /> 
                                 </Link>
                             </div>
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink :href="route('blog.index')" :active="route().current('blog.index')" class="text-indigo-700">
+                                <NavLink :href="route('blog.index')" :active="route().current('blog.index')">
                                     Home
-                                </NavLink>
-                                <NavLink :href="route('post.index')" :active="route().current('post.index')">
-                                    Posts
-                                </NavLink>
-                                <NavLink :href="route('category.index')" :active="route().current('category.index')">
-                                    Categorias
-                                </NavLink>
-                                <NavLink :href="route('author.index')" :active="route().current('author.index')">
-                                    Autores
-                                </NavLink>
-                                <NavLink :href="route('openai.index')" :active="route().current('openai.index')">
-                                    OpenAi
                                 </NavLink>
                             </div>
                         </div>
 
-                        <div class="hidden sm:flex sm:items-center sm:ms-6">
-                            <div class="ms-3 relative">
-                                <!-- Teams Dropdown -->
-                                <Dropdown v-if="$page.props.jetstream.hasTeamFeatures" align="right" width="60">
-                                    <template #trigger>
-                                        <span class="inline-flex rounded-md">
-                                            <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 active:bg-gray-50 dark:active:bg-gray-700 transition ease-in-out duration-150">
-                                                {{ $page.props.auth.user.current_team.name }}
-
-                                                <svg class="ms-2 -me-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
-                                                </svg>
-                                            </button>
-                                        </span>
-                                    </template>
-
-                                    <template #content>
-                                        <div class="w-60">
-                                            <!-- Team Management -->
-                                            <div class="block px-4 py-2 text-xs text-gray-400">
-                                                Manage Team
-                                            </div>
-
-                                            <!-- Team Settings -->
-                                            <DropdownLink :href="route('teams.show', $page.props.auth.user.current_team)">
-                                                Team Settings
-                                            </DropdownLink>
-
-                                            <DropdownLink v-if="$page.props.jetstream.canCreateTeams" :href="route('teams.create')">
-                                                Create New Team
-                                            </DropdownLink>
-
-                                            <!-- Team Switcher -->
-                                            <template v-if="$page.props.auth.user.all_teams.length > 1">
-                                                <div class="border-t border-gray-200 dark:border-gray-600" />
-
-                                                <div class="block px-4 py-2 text-xs text-gray-400">
-                                                    Switch Teams
-                                                </div>
-
-                                                <template v-for="team in $page.props.auth.user.all_teams" :key="team.id">
-                                                    <form @submit.prevent="switchToTeam(team)">
-                                                        <DropdownLink as="button">
-                                                            <div class="flex items-center">
-                                                                <svg v-if="team.id == $page.props.auth.user.current_team_id" class="me-2 h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                                                </svg>
-
-                                                                <div>{{ team.name }}</div>
-                                                            </div>
-                                                        </DropdownLink>
-                                                    </form>
-                                                </template>
-                                            </template>
-                                        </div>
-                                    </template>
-                                </Dropdown>
-                            </div>
-
+                        <div v-if="$page.props.auth.user" class="hidden sm:flex sm:items-center sm:ms-6">
                             <!-- Settings Dropdown -->
                             <div class="ms-3 relative inline-flex">
-                                
                                 <Dropdown align="right" width="48">
                                     <template #trigger>
                                         <span class="inline-flex items-center mr-3 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition duration-150 ease-in-out">{{ $page.props.auth.user.name }}</span>
@@ -160,9 +81,9 @@ const hideFlashMessage = () => {
                                             Manage Account
                                         </div>
 
-                                        <DropdownLink :href="route('post.index')">
+                                        <DropdownLink v-if="$page.props.auth.user.role == 1" :href="route('post.index')">
                                             Administración
-                                        </DropdownLink> 
+                                        </DropdownLink>
 
                                         <DropdownLink :href="route('profile.show')">
                                             Profile
@@ -183,6 +104,14 @@ const hideFlashMessage = () => {
                                     </template>
                                 </Dropdown>
                             </div>
+                        </div>
+                        <div v-else  class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <NavLink :href="route('login')" :active="route().current('login')">
+                                Login
+                            </NavLink>
+                            <NavLink :href="route('register')" :active="route().current('register')">
+                                Registrarse
+                            </NavLink>
                         </div>
 
                         <!-- Hamburger -->
@@ -217,25 +146,16 @@ const hideFlashMessage = () => {
                 <!-- Responsive Navigation Menu -->
                 <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
+                        <!-- <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                            Dashboard
+                        </ResponsiveNavLink> -->
                         <ResponsiveNavLink :href="route('blog.index')" :active="route().current('blog.index')">
-                            <span class="text-indigo-700">Home</span>
-                        </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('category.index')" :active="route().current('category.index')">
-                            Categorias
-                        </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('post.index')" :active="route().current('post.index')">
-                            Posts
-                        </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('author.index')" :active="route().current('author.index')">
-                            Autores
-                        </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('openai.index')" :active="route().current('openai.index')">
-                            OpenAi
+                            Home
                         </ResponsiveNavLink>
                     </div>
 
                     <!-- Responsive Settings Options -->
-                    <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
+                    <div v-if="$page.props.auth.user" class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
                         <div class="flex items-center px-4">
                             <div v-if="$page.props.jetstream.managesProfilePhotos" class="shrink-0 me-3">
                                 <img class="h-10 w-10 rounded-full object-cover" :src="$page.props.auth.user.profile_photo_url" :alt="$page.props.auth.user.name">
@@ -252,7 +172,7 @@ const hideFlashMessage = () => {
                         </div>
 
                         <div class="mt-3 space-y-1">
-                            <ResponsiveNavLink :href="route('post.index')" :active="route().current('post.index')">
+                            <ResponsiveNavLink v-if="$page.props.auth.user.role == 1" :href="route('post.index')" :active="route().current('post.index')">
                                 Administración
                             </ResponsiveNavLink>
 
@@ -270,46 +190,6 @@ const hideFlashMessage = () => {
                                     Log Out
                                 </ResponsiveNavLink>
                             </form>
-
-                            <!-- Team Management -->
-                            <template v-if="$page.props.jetstream.hasTeamFeatures">
-                                <div class="border-t border-gray-200 dark:border-gray-600" />
-
-                                <div class="block px-4 py-2 text-xs text-gray-400">
-                                    Manage Team
-                                </div>
-
-                                <!-- Team Settings -->
-                                <ResponsiveNavLink :href="route('teams.show', $page.props.auth.user.current_team)" :active="route().current('teams.show')">
-                                    Team Settings
-                                </ResponsiveNavLink>
-
-                                <ResponsiveNavLink v-if="$page.props.jetstream.canCreateTeams" :href="route('teams.create')" :active="route().current('teams.create')">
-                                    Create New Team
-                                </ResponsiveNavLink>
-
-                                <!-- Team Switcher -->
-                                <template v-if="$page.props.auth.user.all_teams.length > 1">
-                                    <div class="border-t border-gray-200 dark:border-gray-600" />
-
-                                    <div class="block px-4 py-2 text-xs text-gray-400">
-                                        Switch Teams
-                                    </div>
-
-                                    <template v-for="team in $page.props.auth.user.all_teams" :key="team.id">
-                                        <form @submit.prevent="switchToTeam(team)">
-                                            <ResponsiveNavLink as="button">
-                                                <div class="flex items-center">
-                                                    <svg v-if="team.id == $page.props.auth.user.current_team_id" class="me-2 h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                                    </svg>
-                                                    <div>{{ team.name }}</div>
-                                                </div>
-                                            </ResponsiveNavLink>
-                                        </form>
-                                    </template>
-                                </template>
-                            </template>
                         </div>
                     </div>
                 </div>

@@ -79,10 +79,20 @@
 
                             </div>
 
+                            <!-- <div>
+                                <PrimaryButton @click="customSearch">
+                                    Filtrar
+                                </PrimaryButton>
+                            </div> -->
+                        </div>
+                        <div class="mb-5">
                             <div>
                                 <PrimaryButton @click="customSearch">
                                     Filtrar
                                 </PrimaryButton>
+                                <Link class="ml-3 text-gray-700 hover:text-gray-500" :href="route('post.index')">
+                                    Borrar filtros
+                                </Link>
                             </div>
                         </div>
 

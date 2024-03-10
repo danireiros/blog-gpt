@@ -48,7 +48,7 @@ const alignmentClasses = computed(() => {
 
 <template>
     <div class="relative">
-        <div @click="open = ! open">
+        <div @click="open = ! open" class="inline-flex cursor-pointer">
             <slot name="trigger" />
         </div>
 

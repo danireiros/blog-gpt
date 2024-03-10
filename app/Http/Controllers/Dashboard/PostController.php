@@ -135,7 +135,7 @@ class PostController extends Controller
     {
         $categories = Category::all();
         $authors = Author::all();
-        $post = Post::with(['category', 'author'])->find($post)->first();
+        //$post = Post::with(['category', 'author'])->find($post->id)->first();
         $enumPosted = (new Post())->enumPosted;
         $enumType = (new Post())->enumType;
         //return Inertia::render('Dashboard/Post/Edit', compact('post', 'categories', 'enumPosted', 'enumType'));

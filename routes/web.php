@@ -12,6 +12,7 @@ use App\Http\Controllers\Author\GeneralController;
 use App\Http\Controllers\Dashboard\PostController;
 use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\OpenAi\PostController as OpenAiPostController;
+use App\Http\Controllers\Blog\PostController as BlogPostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,7 @@ use App\Http\Controllers\OpenAi\PostController as OpenAiPostController;
 |
 */
 
+/* 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -31,12 +33,13 @@ Route::get('/', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
-});
+}); */
 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
+    'checkAdminRole',
 ])->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
@@ -53,7 +56,9 @@ Route::middleware([
     Route::get('/openai/completion',        [OpenAiPostController::class, 'postCompletion'])->name('openai.completion');
 });
 
-Route::group([
+Route::get('/', [BlogPostController::class, 'index'])->name('blog.index');
+
+/* Route::group([
     'prefix' => 'author',
     'middleware' => [
         'auth:sanctum',
@@ -66,4 +71,4 @@ Route::group([
     Route::resource('author-company',   CompanyController::class); 
     Route::resource('author-person',    PersonController::class); 
     Route::resource('author-detail',    DetailController::class); 
-});
+}); */
