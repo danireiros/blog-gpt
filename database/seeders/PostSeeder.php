@@ -14,8 +14,8 @@ class PostSeeder extends Seeder
      */
     public function run(): void
     {
-        for ($i=0; $i < 750; $i++) { 
-            $title = Str::random(5, 15);
+        for ($i=0; $i < 50; $i++) { 
+            $title = Str::random(50, 150);
             Post::create([
                 'title' => $title,
                 'slug' => Str($title)->slug(),

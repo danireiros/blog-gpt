@@ -16,15 +16,15 @@ class CategorySeeder extends Seeder
     {
         $titles = [
             'General',
-            'Política',
-            'Tecnología',
-            'Actualidad',
-            'Estilo de vida',
+            'Política',//
+            'Tecnología',//
+            'Actualidad',//
+            'Arquitectura',//
             'Moda',
-            'Humor',
+            'Humor',//
             'Deportes',
-            'Salseo',
-            'Otros',
+            'Salseo',//
+            'Ciencia',//
         ];
         
         for ($i=0; $i < count($titles); $i++) { 

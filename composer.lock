@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7fac6e1cd690245738b3694dde6b5091",
+    "content-hash": "5a93961b0c710a6e73daefb20718e14c",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -1220,6 +1220,51 @@
                 }
             ],
             "time": "2023-10-27T10:59:02+00:00"
+        },
+        {
+            "name": "krisciunaskarolis/openai-images-generator",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/krisciunaskarolis/openai-images-generator.git",
+                "reference": "fd88ab41b70d9e0908cda8675c3a2b151bd81647"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/krisciunaskarolis/openai-images-generator/zipball/fd88ab41b70d9e0908cda8675c3a2b151bd81647",
+                "reference": "fd88ab41b70d9e0908cda8675c3a2b151bd81647",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^7.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Krisciunas\\OpenAi\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Karolis Kriščiūnas",
+                    "email": "karolis.krisciunas@gmail.com"
+                }
+            ],
+            "description": "PHP client for OpenAI images generation",
+            "keywords": [
+                "image generation",
+                "images generator",
+                "openai"
+            ],
+            "support": {
+                "issues": "https://github.com/krisciunaskarolis/openai-images-generator/issues",
+                "source": "https://github.com/krisciunaskarolis/openai-images-generator/tree/v1.0.0"
+            },
+            "time": "2022-12-13T14:08:12+00:00"
         },
         {
             "name": "laravel/fortify",

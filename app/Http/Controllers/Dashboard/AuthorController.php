@@ -59,7 +59,6 @@ class AuthorController extends Controller
     public function edit(Author $author)
     {
         $categories = Category::all();
-        $author = Author::with('category')->find($author)->first();
         /* $enumType = (new Author())->enumType; */
         return Inertia::render('Dashboard/Author/Save', compact('author', 'categories'));
     }

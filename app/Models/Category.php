@@ -23,4 +23,8 @@ class Category extends Model
     public function Author(){
         return $this->hasMany(Author::class);
     }
+
+    public function Web(){
+        return $this->hasMany(Web::class);
+    }
 }

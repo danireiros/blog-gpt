@@ -28,11 +28,14 @@ const logout = () => {
 
 // flash message
 const visibleFlashContainer = ref(true);
-
 const hideFlashMessage = () => {
     setTimeout(() => visibleFlashContainer.value = false, 3000);
     return true;
 };
+
+const remove = () => {
+    this.$parent.categories.$remove(this.category);
+}
 </script>
 
 <template>
@@ -41,8 +44,8 @@ const hideFlashMessage = () => {
 
         <Banner />
 
-        <div class="min-h-screen pb-28 bg-gray-100 dark:bg-gray-900">
-            <nav class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+        <div class="min-h-screen pb-28 bg-neutral-50 dark:bg-gray-900">
+            <nav class="bg-neutral-100 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
                 <!-- Primary Navigation Menu -->
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
@@ -70,6 +73,9 @@ const hideFlashMessage = () => {
                                 </NavLink>
                                 <NavLink :href="route('openai.index')" :active="route().current('openai.index')">
                                     OpenAi
+                                </NavLink>
+                                <NavLink :href="route('web.index')" :active="route().current('web.index')">
+                                    Webs
                                 </NavLink>
                             </div>
                         </div>
@@ -232,6 +238,9 @@ const hideFlashMessage = () => {
                         <ResponsiveNavLink :href="route('openai.index')" :active="route().current('openai.index')">
                             OpenAi
                         </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('web.index')" :active="route().current('web.index')">
+                            Webs
+                        </ResponsiveNavLink>
                     </div>
 
                     <!-- Responsive Settings Options -->
@@ -333,6 +342,14 @@ const hideFlashMessage = () => {
                         </div>
                     </div>
                 </transition>
+
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <div v-if="$page.props.flash.fixedmessage" class="container my-2 rounded-sm shadow-sm bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4" role="alert">
+                        <p class="mb-3">{{ $page.props.flash.fixedmessage }}</p><!-- 
+                        <span @click="remove" class="text-sm cursor-pointer bg-orange-200 hover:bg-orange-300 transition p-2 rounded-lg mt-2 text-orange-700 font-extrabold">CERRAR</span>
+                        <br> -->
+                    </div>
+                </div>
                 
                 <slot />
             </main>

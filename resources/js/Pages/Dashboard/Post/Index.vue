@@ -117,7 +117,7 @@
                                             </template>
                                         </th>
                                         <!-- <th class="p-3">Slug</th> -->   
-                                        <th class="p-3 hover:bg-gray-300 cursor-pointer" @click="sort('text')">
+                                        <!-- <th class="p-3 hover:bg-gray-300 cursor-pointer" @click="sort('text')">
                                             Texto
                                             <template v-if="sortColumn == 'text'">
                                                 <template v-if="sortDirection == 'desc'">&uarr;</template>
@@ -130,10 +130,10 @@
                                                 <template v-if="sortDirection == 'desc'">&uarr;</template>
                                                 <template v-else>&darr;</template>
                                             </template>
-                                        </th>
+                                        </th> -->
                                         <th class="p-3">Categoría</th>
                                         <th class="p-3">Publicado</th>
-                                        <th class="p-3">Tipo</th>
+                                        <!-- <th class="p-3">Tipo</th> -->
                                         <th class="p-3">#</th>
                                     </tr>
                                 </thead>
@@ -144,12 +144,12 @@
                                             <span><img class="h-8 w-8 rounded-full" :src="'/image/author/'+p.author.image">
                                             {{ p.author.name }}</span>
                                         </td>
-                                        <td class="p-2 font-bold">{{ p.title }}</td>
+                                        <td class="p-2 font-bold">{{ p.title.substring(0, 100)+"..." }}</td>
                                         <!-- <td class="p-2">{{ p.slug }}</td> -->
-                                        <td class="p-2">{{ p.text.substring(0, 15)+"..." }}</td>
-                                        <td class="p-2">{{ p.description.substring(0, 15)+"..." }}</td>
+                                        <!-- <td class="p-2">{{ p.text.substring(0, 15)+"..." }}</td>
+                                        <td class="p-2">{{ p.description.substring(0, 15)+"..." }}</td> -->
                                         <td class="p-2">{{ p.category.title }}</td>
-                                        <td class="p-2">
+                                        <!-- <td class="p-2">
                                             <div v-if="p.posted == 'yes'">
                                                 <span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">
                                                     Si
@@ -160,7 +160,7 @@
                                                     No
                                                 </span>
                                             </div>
-                                        </td>
+                                        </td> -->
                                         <td class="p-2">{{ p.type }}</td>
                                         <td class="p-2">
                                             <Link as="button" class="text-sm text-purple-400 hover:text-purple-700 mx-2" :href="route('post.edit', p.id)">Editar</Link>

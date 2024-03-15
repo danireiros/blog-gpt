@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('title', 255);
             $table->string('slug', 255);
             //$table->string('date')->default(Carbon::now());
-            $table->string('image', 260)->nullable();
+            $table->string('image', 255)->nullable();
             $table->text('text')->nullable();
             $table->text('description')->nullable();
             $table->enum('posted', ['yes', 'not'])->default('not');

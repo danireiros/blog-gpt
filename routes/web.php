@@ -4,15 +4,18 @@ use Inertia\Inertia;
 use App\Http\Requests\Author\Author;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
-use App\Http\Controllers\Dashboard\AuthorController;
+use App\Http\Controllers\Web\MainController;
+use App\Http\Controllers\Tools\ImageController;
+use App\Http\Controllers\Web\SoymotorController;
 use App\Http\Controllers\Author\DetailController;
 use App\Http\Controllers\Author\PersonController;
 use App\Http\Controllers\Author\CompanyController;
 use App\Http\Controllers\Author\GeneralController;
 use App\Http\Controllers\Dashboard\PostController;
+use App\Http\Controllers\Dashboard\AuthorController;
 use App\Http\Controllers\Dashboard\CategoryController;
-use App\Http\Controllers\OpenAi\PostController as OpenAiPostController;
 use App\Http\Controllers\Blog\PostController as BlogPostController;
+use App\Http\Controllers\OpenAi\PostController as OpenAiPostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,9 +57,21 @@ Route::middleware([
 
     Route::get('/openai',                   [OpenAiPostController::class, 'index'])->name('openai.index');
     Route::get('/openai/completion',        [OpenAiPostController::class, 'postCompletion'])->name('openai.completion');
+
+    // tools
+    Route::get('/image/store', [ImageController::class, 'storeImageFromUrl'])->name('image.store');
+
+    // webs
+    Route::resource('/web',     MainController::class);
+    Route::get('/web/gestion/soymotor/f1/{web}',     [SoymotorController::class, 'GenerateWebPost'])->name('SoyMotor.generate');
+    Route::get('/web/gestion/soymotor/coches/{web}',     [SoymotorController::class, 'GenerateWebPost'])->name('SoyMotor_Coches.generate');
+    /* Route::get('/web/gestion/soymotor/noticia', [SoymotorController::class, 'getNewContent'])->name('SoyMotor.show'); */
 });
 
 Route::get('/', [BlogPostController::class, 'index'])->name('blog.index');
+Route::get('/blog/post/{post}', [BlogPostController::class, 'show'])->name('blog.post.show');
+
+
 
 /* Route::group([
     'prefix' => 'author',
