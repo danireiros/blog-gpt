@@ -62,14 +62,18 @@ Route::middleware([
     Route::get('/image/store', [ImageController::class, 'storeImageFromUrl'])->name('image.store');
 
     // webs
-    Route::resource('/web',     MainController::class);
-    Route::get('/web/gestion/soymotor/f1/{web}',     [SoymotorController::class, 'GenerateWebPost'])->name('SoyMotor.generate');
-    Route::get('/web/gestion/soymotor/coches/{web}',     [SoymotorController::class, 'GenerateWebPost'])->name('SoyMotor_Coches.generate');
+    Route::resource('/web',                   MainController::class);
+    Route::get('/web/generate/{webname}',     [MainController::class, 'routeWeb'])->name('web.generate');
+
+    /* Route::get('/web/gestion/soymotor/f1/{web}',     [SoymotorController::class, 'GenerateWebPost'])->name('SoyMotor.generate');
+    Route::get('/web/gestion/soymotor/coches/{web}', [SoymotorController::class, 'GenerateWebPost'])->name('SoyMotor_Coches.generate');
+    Route::get('/web/gestion/xataka/{web}',          [SoymotorController::class, 'GenerateWebPost'])->name('Xataka.generate'); */
     /* Route::get('/web/gestion/soymotor/noticia', [SoymotorController::class, 'getNewContent'])->name('SoyMotor.show'); */
 });
 
-Route::get('/', [BlogPostController::class, 'index'])->name('blog.index');
-Route::get('/blog/post/{post}', [BlogPostController::class, 'show'])->name('blog.post.show');
+Route::get('/',                         [BlogPostController::class, 'index'])->name('blog.index');
+Route::get('/category/{category}',      [BlogPostController::class, 'category'])->name('blog.category');
+Route::get('/blog/{post}',         [BlogPostController::class, 'show'])->name('blog.post.show');
 
 
 

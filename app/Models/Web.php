@@ -17,6 +17,8 @@ class Web extends Model
         'news_subdomain',
         'news_container_content_start',
         'news_container_content_end',
+        'new_content_start',
+        'new_content_end',
         'category_id',
     ];
 

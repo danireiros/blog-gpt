@@ -63,6 +63,16 @@
                     <InputError :message="errors.news_container_content_end"/>
                     <TextInput class="w-full" type="text" v-model="form.news_container_content_end"/>
                 </div>
+                <div class="col-span-6">
+                    <InputLabel for="">Inicio html articulo</InputLabel>
+                    <InputError :message="errors.new_content_start"/>
+                    <TextInput class="w-full" type="text" v-model="form.new_content_start"/>
+                </div>
+                <div class="col-span-6">
+                    <InputLabel for="">Fin html articulo</InputLabel>
+                    <InputError :message="errors.new_content_end"/>
+                    <TextInput class="w-full" type="text" v-model="form.new_content_end"/>
+                </div>
             </template>
             <template #actions>
                 <PrimaryButton class="mt-1" type="submit">
@@ -118,6 +128,8 @@ export default {
                 news_subdomain: "",
                 news_container_content_start: "",
                 news_container_content_end: "",
+                new_content_start: "",
+                new_content_end: "",
                 category_id: "",
             }
         },
@@ -133,6 +145,8 @@ export default {
             news_container_content_start: props.web.news_container_content_start,
             news_container_content_end: props.web.news_container_content_end,
             category_id: props.web.category_id,
+            new_content_start: props.web.new_content_start,
+            new_content_end: props.web.new_content_end,
             image: '',
         })
 
@@ -146,6 +160,8 @@ export default {
                     news_subdomain: form.news_subdomain,
                     news_container_content_start: form.news_container_content_start,
                     news_container_content_end: form.news_container_content_end,
+                    new_content_start: form.new_content_start,
+                    new_content_end: form.new_content_end,
                     category_id: form.category_id,
                 });
             }else{
@@ -158,6 +174,8 @@ export default {
                     news_subdomain: form.news_subdomain,
                     news_container_content_start: form.news_container_content_start,
                     news_container_content_end: form.news_container_content_end,
+                    new_content_start: form.new_content_start,
+                    new_content_end: form.new_content_end,
                     category_id: form.category_id,
                 });
             }

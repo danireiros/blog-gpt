@@ -22,8 +22,8 @@ class Post extends Model
         'author_id'
     ];
 
-    public $enumPosted = ['yes', 'not'];
-    public $enumType = ['ad', 'post', 'course', 'movie'];
+    public $enumPosted = ['publicado','rechazado','pendiente'];
+    public $enumType = ['#ad', 'post'];
 
     public function category(){
         return $this->belongsTo(Category::class);

@@ -1,5 +1,22 @@
 <template>
     <BlogLayout>
+        <template #catnavs>
+            <div v-for="c in categories" :key="c.id">
+                <div class="hidden space-x-8 sm:-my-px sm:ms-4 sm:flex h-full">
+                    <NavLink :href="route('blog.category', c.title)" :active="route().current('blog.category', c.title)">
+                        <img class="h-4 w-4" :src="'/image/category/'+c.image">
+                    </NavLink>
+                </div>
+            </div>
+        </template>
+
+        <template #catnavs_responsive>
+            <div v-for="c in categories" :key="c.id">
+                <ResponsiveNavLink :href="route('blog.category', c.title)" :active="route().current('blog.category', c.title)">
+                    <img class="h-4 w-4" :src="'/image/category/'+c.image">
+                </ResponsiveNavLink>
+            </div>
+        </template>
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             <div class="container mt-5 m-auto">
                 <div v-if="post" class="content-center">
@@ -14,7 +31,7 @@
                     <p :style="{ fontFamily: 'IBM', fontWeight: 'normal', fontStyle: 'normal' }" class="mb-3 max-w-xl text-xl leading-relaxed font-normal text-gray-700 dark:text-gray-400" v-html="post.text"></p>
                 </div> 
                 <div v-else>
-                    <div class="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4" role="alert">
+                    <div class="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4 mt-8" role="alert">
                         <p>Ups! No tenemos ni idea donde está este artículo...</p>
                     </div>
                 </div>
@@ -28,6 +45,8 @@
 
     import BlogLayout from "@/Layouts/BlogLayout.vue";
     import Pagination from '@/Shared/Pagination.vue';
+    import NavLink from '@/Components/NavLink.vue';
+    import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
     
     export default {
         data() {
@@ -53,9 +72,12 @@
             Link,
             BlogLayout,
             Pagination,
+            NavLink,
+            ResponsiveNavLink,
         },
         props: {
             post: Object,
+            categories: Object,
         }
     }
 </script>

@@ -18,12 +18,12 @@ return new class extends Migration
             $table->string('description', 255);
             $table->string('image', 255)->nullable();
             $table->string('domain', 255);
-            $table->string('news_subdomain', 255);
+            $table->string('news_subdomain', 255)->nullable();
             $table->string('news_container_content_start', 255);
             $table->string('news_container_content_end', 255);
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
-            $table->string('news_content_start', 255);
-            $table->string('news_content_end', 255);
+            $table->string('new_content_start', 255);
+            $table->string('new_content_end', 255);
 
             $table->timestamps();
         });

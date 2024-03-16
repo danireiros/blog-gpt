@@ -14,6 +14,16 @@
                     <TextInput class="w-full" type="text" v-model="form.title"/>
                 </div> 
                 <div class="col-span-6">
+                    <InputLabel for="">Color</InputLabel>
+                    <InputError :message="errors.color"/>
+                    <TextInput class="w-full" type="color" v-model="form.color"/>
+                </div>
+                <div class="col-span-6">
+                    <InputLabel for="image">Imagen</InputLabel>
+                    <InputError :message="errors.image"/>
+                    <TextInput class="w-full rounded-none" type="file" @input="form.image = $event.target.files[0]" />
+                </div>
+                <div class="col-span-6">
                     <InputLabel for="">Slug</InputLabel>
                     <InputError :message="errors.slug"/>
                     <TextInput class="w-full" type="text" v-model="form.slug"/>
@@ -56,10 +66,18 @@ export default {
             id: props.category.id,
             title: props.category.title,
             slug: props.category.slug,
+            color: props.category.color,
+            image: props.category.image,
         })
 
         function submit(){
-            form.put(route('category.update', form.id), form);
+            router.post(route('category.update', form.id), {
+                _method: 'put',
+                title: form.title,
+                slug: form.slug,
+                color: form.color,
+                image: form.image,
+            });
         }
 
         return { form, submit }

@@ -36,7 +36,7 @@
                                 <TextInput @change="customSearch" class="w-full" v-model="to" placeholder="Desde..." type="date" />
                             </div>
                             <div>
-                                <InputLabel for="">Publicado</InputLabel>
+                                <InputLabel for="">Estado</InputLabel>
                                 <select @change="customSearch" class="rounded-md w-full border-gray-300" v-model="posted">7
                                     <option :value="null">-</option>
                                     <option v-for="value in enumPosted" :key="value" :value="value" :selected="posted == value">
@@ -132,7 +132,7 @@
                                             </template>
                                         </th> -->
                                         <th class="p-3">Categoría</th>
-                                        <th class="p-3">Publicado</th>
+                                        <th class="p-3">Estado</th>
                                         <!-- <th class="p-3">Tipo</th> -->
                                         <th class="p-3">#</th>
                                     </tr>
@@ -149,19 +149,24 @@
                                         <!-- <td class="p-2">{{ p.text.substring(0, 15)+"..." }}</td>
                                         <td class="p-2">{{ p.description.substring(0, 15)+"..." }}</td> -->
                                         <td class="p-2">{{ p.category.title }}</td>
-                                        <!-- <td class="p-2">
-                                            <div v-if="p.posted == 'yes'">
+                                        <td class="p-2">
+                                            <div v-if="p.posted == 'publicado'">
                                                 <span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">
-                                                    Si
+                                                    {{ p.posted }}
+                                                </span>
+                                            </div>
+                                            <div v-else-if="p.posted == 'pendiente'">
+                                                <span class="bg-orange-100 text-orange-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-orange-900 dark:text-orange-300">
+                                                    {{ p.posted }}
                                                 </span>
                                             </div>
                                             <div v-else>
                                                 <span class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">
-                                                    No
+                                                    {{ p.posted }}
                                                 </span>
                                             </div>
-                                        </td> -->
-                                        <td class="p-2">{{ p.type }}</td>
+                                        </td>
+                                        <!-- <td class="p-2">{{ p.type }}</td> -->
                                         <td class="p-2">
                                             <Link as="button" class="text-sm text-purple-400 hover:text-purple-700 mx-2" :href="route('post.edit', p.id)">Editar</Link>
                                             <!-- <Link as="button" class="text-sm text-red-400 hover:text-red-700 mx-2" method="delete" :href="route('post.destroy', p.id)">Eliminar</Link> -->

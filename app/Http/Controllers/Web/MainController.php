@@ -17,15 +17,8 @@ class MainController extends Controller
      * Display a listing of the resource.
      */
     public function index(){
-        $webs = Web::with('category')->paginate(5);
+        $webs = Web::with('category')->paginate(10);
         return Inertia('Dashboard/Web/index', compact('webs'));
-    }
-
-    /**
-     * Obtener contenedor de links de noticias
-     */
-    public function getNewsContent($start = '', $end = '', $newsDomain = ''){
-
     }
 
     
@@ -93,5 +86,19 @@ class MainController extends Controller
         //
     }
 
-    
+    /**
+     * Ruteo de webs para generar noticias
+     */
+    public function routeWeb($webname){
+        if($webname == 'SoyMotor' || $webname == 'SoyMotor_Coches'){
+            $soyMotorController = new SoymotorController();
+            $soyMotorController->GenerateWebPost($webname);
+        }elseif($webname == 'Xataka' || $webname == 'XatakaMovil' || $webname == 'VidaExtra' || $webname == 'Espinof'){
+            $xatakaController = new XatakaController();
+            $xatakaController->GenerateWebPost($webname);
+        }else{
+            return to_route('web.index')->with('message', 'Web '.$webname.' no tiene ruteo asignado. Asigne ruta en web.php');
+        }
+
+    }
 }

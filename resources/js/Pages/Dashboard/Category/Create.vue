@@ -14,6 +14,16 @@
                     <TextInput class="w-full" type="text" v-model="form.title"/>
                 </div> 
                 <div class="col-span-6">
+                    <InputLabel for="">Color</InputLabel>
+                    <InputError :message="errors.color"/>
+                    <TextInput class="w-full" type="color" v-model="form.color"/>
+                </div>
+                <div class="col-span-6">
+                    <InputLabel for="image">Imagen</InputLabel>
+                    <InputError :message="errors.image"/>
+                    <TextInput class="w-full rounded-none" type="file" @input="form.image = $event.target.files[0]" />
+                </div>
+                <div class="col-span-6">
                     <InputLabel for="">Slug</InputLabel>
                     <InputError :message="errors.slug"/>
                     <TextInput class="w-full" type="text" v-model="form.slug"/>
@@ -54,10 +64,17 @@ export default {
         const form = useForm({
             title: null,
             slug: null,
+            color: null,
+            image: null,
         })
 
         function submit(){
-            router.post(route('category.store', form));
+            router.post(route('category.store', form.id), {
+                title: form.title,
+                slug: form.slug,
+                color: form.color,
+                image: form.image,
+            });
         }
 
         return { form, submit }

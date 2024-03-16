@@ -12,9 +12,9 @@
                                     <tr class="border-b">
                                         <th class="p-3">Imagen</th>
                                         <th class="p-3">Nombre</th>
-                                        <th class="p-3">Descripcion</th>
+                                        <!-- <th class="p-3">Descripcion</th> -->
                                         <th class="p-3">Dominio</th>
-                                        <th class="p-3">Subdominio</th>
+                                        <!-- <th class="p-3">Subdominio</th> -->
                                         <th class="p-3">Categoria</th>
                                         <th class="p-3">#</th>
                                         <th class="p-3">Noticias</th>
@@ -26,9 +26,9 @@
                                             <img class="h-16 w-16" :src="'/image/web/'+w.image">
                                         </td>
                                         <td class="p-2 font-bold">{{ w.name }}</td>
-                                        <td class="p-2">{{ w.description }}</td>
+                                        <!-- <td class="p-2">{{ w.description }}</td> -->
                                         <td class="p-2">{{ w.domain }}</td>
-                                        <td class="p-2">{{ w.news_subdomain }}</td>
+                                        <!-- <td class="p-2">{{ w.news_subdomain }}</td> -->
                                         <td class="p-2">{{ w.category.title }}</td>
                                         <td class="p-2">
                                             <Link as="button" class="text-sm text-purple-400 hover:text-purple-700 mx-2" :href="route('web.edit', w.id)">Editar</Link>
@@ -37,7 +37,7 @@
                                             
                                         </td>
                                         <td class="p-2">
-                                            <Link as="button" class="link-button-default mb-3 hover:text-gray-100" :href="route( w.name + '.generate', w.name)">Generar noticias</Link>
+                                            <Link as="button" class="link-button-default mb-3 hover:text-gray-100" :href="route('web.generate', w.name)">Generar noticias</Link>
                                         </td>
                                     </tr>
                                 </tbody>

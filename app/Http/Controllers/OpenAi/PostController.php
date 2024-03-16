@@ -36,7 +36,7 @@ class PostController extends Controller
 
         $pnum = mt_rand(4,7);
 
-        $system_prompt = "$author->system_prompt. Reinterpreta la siguiente noticia a tu manera usando parrafos de maximo 5 lineas que sean cortos, el titulo en <h2> y $pnum parrafos metidos en sus <p class='mb-8'>, destaca las palabras importantes en negrita usando <span class='font-bold'>.";
+        $system_prompt = "$author->system_prompt. Reinterpreta la siguiente noticia a tu manera usando parrafos de maximo 5 lineas que sean cortos, el titulo en <h2> y $pnum parrafos metidos en sus <p class='mb-8'>, destaca las palabras importantes en negrita usando <strong>.";
         if(!$text){
             $text = "Escribe un articulo sobre $author->subcategory";
         }
@@ -120,13 +120,15 @@ class PostController extends Controller
         $content = preg_replace($pattern, '', $content);
         $content = str_replace('**', '', $content);
 
+        $description = substr($this->getWords($content, 30), 0, 255); 
+
         $data = [
             'title' => strip_tags($title),
             'slug' => $slug,
             'text' => $content,
-            'description' => substr($content, 0, 255),
+            'description' => $description,
             'image' => $this->postImageGeneration($author->subcategory, substr($content, 0, 255)),
-            'posted' => true,
+            'posted' => 'pendiente',
             'type' => 'post',
             'category_id' => $author->category->id,
             'author_id' => $author->id,
@@ -134,5 +136,21 @@ class PostController extends Controller
 
         $post = Post::create($data);
         return $post;
+    }
+
+    public function getWords($content, $words){
+        $maxLengthWords = $words;
+        $content = strip_tags($content);
+        $words = $this->splitWords($content);
+        if (count($words) > $maxLengthWords) {
+            $words = array_slice($words, 0, $maxLengthWords);
+            $content = implode(' ', $words);
+        }
+        return $content;
+    }
+
+    function splitWords($text) {
+        preg_match_all('/\b[\p{L}\'\-.]+\b/u', $text, $matches);
+        return $matches[0];
     }
 }

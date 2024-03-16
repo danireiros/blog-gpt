@@ -31,18 +31,15 @@ class SoymotorController extends Controller
 
         if($content){
             $links = $this->getNewsLinks($content, $web->domain);
-
             foreach ($links as $link) {
                 $links_found++;
-                $new_content = $this->getNewContent($link);
+                $new_content = $this->getNewContent($link, $web->new_content_start, $web->new_content_end);
 
                 if($new_content){
                     $post = $this->generatePost($new_content, $link, $web->category_id);
                     if($post){
                         $news_generated++;
                     }
-                }else{
-
                 }
             }
 
@@ -53,7 +50,7 @@ class SoymotorController extends Controller
                 'posts_generated' => $news_generated,
             ]);
 
-            return to_route('web.index')->with('fixedmessage', "Generación con éxito: 
+            return to_route('web.index')->with('fixedmessage', $web->name." revisada con exito con éxito: 
                 links = $links_found
                 posts generados = $news_generated");
         }else{
@@ -121,9 +118,9 @@ class SoymotorController extends Controller
     /**
      * Eliminar links duplicados
      */
-    public function getNewContent($link){
-        $start = '<h1 class="page-title">';
-        $end = '<div class="content-sidebar">';
+    public function getNewContent($link, $start, $end){
+        /* $start = '<h1 class="page-title">';
+        $end = '<div class="content-sidebar">'; */
         $pattern = '/'. preg_quote($start, '/') . '(.*?)' . preg_quote($end, '/') . '/s';
 
         $client = new Client();
@@ -169,7 +166,7 @@ class SoymotorController extends Controller
         if(!$isPost){
             $OpenaiPostController = new PostController();
             $OpenaiPostController->postCompletion('gpt-4-0125-preview', $author, $content, $slug);
-            sleep(10);
+            sleep(5);
             return 1;
         }
         return null;

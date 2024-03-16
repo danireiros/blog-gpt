@@ -52,6 +52,8 @@ const hideFlashMessage = () => {
                                     Home
                                 </NavLink>
                             </div>
+
+                            <slot name="catnavs" />
                         </div>
 
                         <div v-if="$page.props.auth.user" class="hidden sm:flex sm:items-center sm:ms-6">
@@ -152,6 +154,8 @@ const hideFlashMessage = () => {
                         <ResponsiveNavLink :href="route('blog.index')" :active="route().current('blog.index')">
                             Home
                         </ResponsiveNavLink>
+
+                        <slot name="catnavs_responsive" />
                     </div>
 
                     <!-- Responsive Settings Options -->

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('posts_log', function (Blueprint $table) {
             $table->id();
             $table->string('domain', 255);
-            $table->string('subdomain', 255);
+            $table->string('subdomain', 255)->nullable();
             $table->string('posts_found', 255);
             $table->string('posts_generated', 255);
             $table->timestamps();

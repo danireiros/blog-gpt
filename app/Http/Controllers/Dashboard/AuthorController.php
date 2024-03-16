@@ -18,8 +18,16 @@ class AuthorController extends Controller
      */
     public function index()
     {
-        $authors = Author::with('category')->paginate(5);
-        return Inertia('Dashboard/Author/Index', compact('authors'));
+        $authors = Author::with('category');
+        $categories = Category::all();
+
+        $filter_category_id = request('category_id');
+        if($filter_category_id)
+            $authors->where('category_id', $filter_category_id);
+
+        $authors = $authors->paginate(10);
+        
+        return Inertia('Dashboard/Author/Index', compact('authors', 'categories'));
     }
 
     /**

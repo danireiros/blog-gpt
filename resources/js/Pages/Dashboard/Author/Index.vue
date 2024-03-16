@@ -19,6 +19,15 @@
                 <div class="card">
                     <div class="card-body">
                         <h2 class="mb-2 text-xl font-semibold text-gray-900 dark:text-white">Autores</h2>
+                        <div class="mb-2">
+                            <InputLabel for="">Categoría</InputLabel>
+                            <select @change="customSearch" class="rounded-md w-full border-gray-300" v-model="category_id">
+                                <option :value="null">-</option>
+                                <option v-for="c in categories" :key="c.id" :value="c.id">
+                                    {{ c.title }}
+                                </option>
+                            </select>
+                        </div>
                         <Link class="link-button-default mb-3 hover:text-gray-100" :href="route('author.create')">Crear</Link>
                         <div v-if="authors.data.length > 0">
                             <table class="w-full border">
@@ -76,10 +85,16 @@
     import ConfirmationModal from "@/Components/ConfirmationModal.vue";
     
     export default {
-        data() {
+        props: {
+            authors: Object,
+            categories: Object,
+            filter_category_id: String,
+        },
+        data(props) {
             return {
                 confirmDeleteActive: false,
                 deleteAuthorRow: "",
+                category_id: props.filter_category_id,
             }
         }, 
         methods: {
@@ -87,15 +102,20 @@
                 router.delete(route("author.destroy", this.deleteAuthorRow));
                 this.confirmDeleteActive = false;
             }, 
+            customSearch() {
+                router.get(route('author.index'),{
+                    category_id: this.category_id,
+                }, {
+                    preserveState: true,
+                    preserveScroll: true
+                });
+            },
         },
         components: {
             Link,
             AppLayout,
             Pagination,
             ConfirmationModal
-        },
-        props: {
-            authors: Object,
         }
     }
 </script>

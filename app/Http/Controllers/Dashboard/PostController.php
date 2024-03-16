@@ -63,7 +63,7 @@ class PostController extends Controller
             $posts->whereBetween('created_at', [request('from'), request('to')]);
         }
 
-        $posts = $posts->paginate(5);
+        $posts = $posts->paginate(12);
 
         return Inertia::render('Dashboard/Post/Index', compact(
             'sortColumn', 

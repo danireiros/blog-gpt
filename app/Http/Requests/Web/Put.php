@@ -26,7 +26,7 @@ class Put extends FormRequest
             'description' => 'required|min:5|max:255',
             'domain' => 'required|min:5|max:255',
             'category_id' => 'required|exists:categories,id',
-            'news_subdomain' => 'required|min:5|max:255',
+            'news_subdomain' => 'max:255',
             'news_container_content_start' => 'required|min:5|max:255',
             'news_container_content_end' => 'required|min:5|max:255',
         ];

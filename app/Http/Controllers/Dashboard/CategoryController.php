@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Category\Put;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Category\Store;
+use App\Http\Controllers\Tools\ImageController;
 
 class CategoryController extends Controller
 {
@@ -16,7 +17,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::paginate(5);
+        $categories = Category::paginate(20);
         return Inertia::render('Dashboard/Category/Index', compact('categories'));
     }
 
@@ -33,7 +34,13 @@ class CategoryController extends Controller
      */
     public function store(Store $request)
     {
-        Category::create($request->validated());
+        $category = Category::create($request->validated());
+
+        if($request->image){
+            $imageController = new ImageController();
+            $imageController->upload($request, $category, 'category');
+        }
+
         return to_route('category.index')->with('message', 'Categoría '. $request->title.' actualizada con exito.');
     }
 
@@ -59,6 +66,12 @@ class CategoryController extends Controller
     public function update(Put $request, Category $category)
     {
         $category->update($request->validated());
+
+        if($request->image){
+            $imageController = new ImageController();
+            $imageController->upload($request, $category, 'category');
+        }
+
         return to_route('category.index')->with('message', 'Categoría '. $category->title.' actualizada con exito.');
     }
 

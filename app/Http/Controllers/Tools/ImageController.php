@@ -35,7 +35,7 @@ class ImageController extends Controller
     public function upload($request, $model, $modelname)
     {
         $request->validate(
-            ['image' => 'required|mimes:jpg,jpeg,png,gif|max:10240'],
+            ['image' => 'required|mimes:jpg,jpeg,png,gif,svg,html|max:10240'],
         );
 
         Storage::disk('public_upload')->delete("image/$modelname/".$model->image);

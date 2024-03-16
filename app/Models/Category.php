@@ -13,7 +13,8 @@ class Category extends Model
         'title',
         'slug',
         'image',
-        'text'
+        'text',
+        'color'
     ];
 
     public function Post(){
