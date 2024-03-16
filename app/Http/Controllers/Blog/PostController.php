@@ -14,7 +14,7 @@ class PostController extends Controller
      * Display all posts
      */
     public function index(){
-        $posts = Post::with(['category', 'author'])->where('posted', true)->orderBy('id', 'desc')->paginate(11);
+        $posts = Post::with(['category', 'author'])->where('posted', true)->orderBy('updated_at', 'desc')->paginate(11);
 
         $categories = Category::all();
         return Inertia('Blog/Index', compact('posts', 'categories'));
