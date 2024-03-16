@@ -18,16 +18,16 @@
             </div>
         </template>
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
-            <div class="container mt-5 m-auto">
+            <div class="container mt-5 m-auto p-5">
                 <div v-if="post" class="content-center">
                     <h5 class="mb-8 mt-4 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{{ post.title }}</h5>
-                    <img class="mb-8 transition-all object-cover h-96 w-full rounded-lg" 
+                    <img class="transition-all object-cover h-96 w-full rounded-lg" 
                     :src="'/image/post/'+post.image" 
                     alt="" />
-                    <div class="inline-flex text-gray-500 mb-0">
-                        <img class="h-8 w-8 rounded-full mr-3" :src="'/image/author/'+post.author.image"><small class="mt-1">{{ post.author.name }} - {{ formatDate(post.created_at) }}</small>
+                    <p class="mb-8"><small>{{ formatDate(post.created_at) }}</small></p>
+                    <div class="inline-flex text-gray-500 mb-8">
+                        <img class="h-8 w-8 rounded-full mr-3" :src="'/image/author/'+post.author.image"><small class="mt-2 font-semibold">{{ post.author.name }}<span class="text-sm text-gray-300 font-thin"> - {{ post.author.description }}</span></small>
                     </div>
-                    <p class="mb-8 text-sm italic text-gray-300">- {{ post.author.description }}</p>
                     <p :style="{ fontFamily: 'IBM', fontWeight: 'normal', fontStyle: 'normal' }" class="mb-3 max-w-xl text-xl leading-relaxed font-normal text-gray-700 dark:text-gray-400" v-html="post.text"></p>
                 </div> 
                 <div v-else>

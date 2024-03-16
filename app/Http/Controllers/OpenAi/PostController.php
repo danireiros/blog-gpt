@@ -36,7 +36,7 @@ class PostController extends Controller
 
         $pnum = mt_rand(4,7);
 
-        $system_prompt = "$author->system_prompt. Reinterpreta la siguiente noticia a tu manera usando parrafos de maximo 5 lineas que sean cortos, el titulo en <h2> y $pnum parrafos metidos en sus <p class='mb-8'>, destaca las palabras importantes en negrita usando <strong>.";
+        $system_prompt = "$author->system_prompt. Reinterpreta la siguiente noticia a tu manera usando parrafos de maximo 5 lineas que sean cortos, el titulo en <h2> y $pnum parrafos metidos en sus <p>, entre parrafo y parrafo mete <p>&nbsp;</p>, destaca las palabras importantes en negrita usando <strong>.";
         if(!$text){
             $text = "Escribe un articulo sobre $author->subcategory";
         }
