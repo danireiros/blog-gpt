@@ -20,6 +20,7 @@ class Web extends Model
         'new_content_start',
         'new_content_end',
         'category_id',
+        'style',
     ];
 
     public function category(){

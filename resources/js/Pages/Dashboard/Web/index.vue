@@ -16,6 +16,7 @@
                                         <th class="p-3">Dominio</th>
                                         <!-- <th class="p-3">Subdominio</th> -->
                                         <th class="p-3">Categoria</th>
+                                        <th class="p-3">Estilo Imagen</th>
                                         <th class="p-3">#</th>
                                         <th class="p-3">Noticias</th>
                                     </tr>
@@ -30,6 +31,7 @@
                                         <td class="p-2">{{ w.domain }}</td>
                                         <!-- <td class="p-2">{{ w.news_subdomain }}</td> -->
                                         <td class="p-2">{{ w.category.title }}</td>
+                                        <td class="p-2">{{ w.style }}</td>
                                         <td class="p-2">
                                             <Link as="button" class="text-sm text-purple-400 hover:text-purple-700 mx-2" :href="route('web.edit', w.id)">Editar</Link>
                                             <button class="text-sm text-red-400 hover:text-red-700 mx-2"

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Web;
+namespace App\Http\Requests\OpenAi\Image;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -23,14 +23,8 @@ class Store extends FormRequest
     {
         return [
             'name' => 'required|min:2|max:255',
-            'image' => 'required',
-            'description' => 'required|min:5|max:255',
-            'domain' => 'required|min:5|max:255',
-            'category_id' => 'required|exists:categories,id',
-            'news_subdomain' => 'max:255',
-            'style' => 'max:255',
-            'news_container_content_start' => 'required|min:5|max:255',
-            'news_container_content_end' => 'required|min:5|max:255',
+            'model_name' => 'required|min:2|max:255',
+            'size' => 'required',
         ];
     }
 }

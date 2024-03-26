@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Post\Put;
 use App\Http\Requests\Post\Store;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\OpenAi\OpenAiController;
+use App\Http\Controllers\Tools\TextController;
 use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
@@ -185,5 +187,62 @@ class PostController extends Controller
         );
 
         return to_route('post.index')->with('message', 'Imagen de '. $post->title.' subida con exito.');
+    }
+
+    /**
+     * Genera post desde openai
+     */
+    public function generate($model = 'gpt-4-0125-preview', $imageModel = 'dall-e-3', $imageStyle, $author, $content, $slug){
+        // text
+        $systemPrompt = "$author->system_prompt. Reinterpreta la siguiente noticia a tu manera usando parrafos de maximo 5 lineas que sean cortos, una frase corta que sea el titulo dentro de un <h2> y ".mt_rand(4, 7)." parrafos metidos en sus <p>, entre parrafo y parrafo mete <p>&nbsp;</p>, destaca las palabras importantes en negrita usando <strong>.";
+        $openAiController = new OpenAiController();
+        $content = $openAiController->postChatCompletion(
+            $model,
+            $systemPrompt,
+            $content,
+        );
+
+        // image
+        if (preg_match('/<h2>(.*?)<\/h2>/', $content, $matches)) {
+            $title = $matches[1];
+        } else {
+            $title = substr(strip_tags($content), 0, 255);
+        }
+        $imagePrompt = "Imagen estilo $imageStyle de $title, sin texto ni letras.";
+        $imageName = $openAiController->postImageGeneration($imagePrompt, $imageModel);
+
+        // post
+        if(!$slug){
+            $slug = Str(substr($title, 0, 100))->slug();
+        }
+
+        $pattern = '/<h2[^>]*>.*?<\/h2>/si';
+        $content = preg_replace($pattern, '', $content);
+        $content = str_replace('**', '', $content);
+
+        $textController = new TextController();
+        $description = substr($textController->getWords($content, 30), 0, 255); 
+
+        $data = [
+            'title' => strip_tags($title),
+            'slug' => $slug,
+            'text' => $content,
+            'description' => $description,
+            'image' => $imageName,
+            'posted' => 'pendiente',
+            'type' => 'post',
+            'category_id' => $author->category->id,
+            'author_id' => $author->id,
+        ];
+
+        $post = Post::create($data);
+        return $post;
+    }
+
+    public function generateRandom(){
+        $author = Author::inRandomOrder()->first();
+        $post = $this->generate('gpt-4-0125-preview', 'dall-e-3', 'dibujo animado', $author, $author->subcategory, null);
+
+        return to_route('post.index')->with('message', ''. $post->title.' generado con IA con exito.');
     }
 }

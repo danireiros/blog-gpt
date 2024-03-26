@@ -44,6 +44,11 @@
                     </select>
                 </div>
                 <div class="col-span-6">
+                    <InputLabel for="">Estilo de imagen</InputLabel>
+                    <InputError :message="errors.style"/>
+                    <TextInput class="w-full" type="text" v-model="form.style"/>
+                </div>
+                <div class="col-span-6">
                     <InputLabel for="">Dominio</InputLabel>
                     <InputError :message="errors.domain"/>
                     <TextInput class="w-full" type="text" v-model="form.domain"/>
@@ -131,6 +136,7 @@ export default {
                 new_content_start: "",
                 new_content_end: "",
                 category_id: "",
+                style: "",
             }
         },
         categories: Object,
@@ -147,6 +153,7 @@ export default {
             category_id: props.web.category_id,
             new_content_start: props.web.new_content_start,
             new_content_end: props.web.new_content_end,
+            style: props.web.style,
             image: '',
         })
 
@@ -157,6 +164,7 @@ export default {
                     description: form.description,
                     domain: form.domain,
                     image: form.image,
+                    style: form.style,
                     news_subdomain: form.news_subdomain,
                     news_container_content_start: form.news_container_content_start,
                     news_container_content_end: form.news_container_content_end,
@@ -171,6 +179,7 @@ export default {
                     description: form.description,
                     domain: form.domain,
                     image: form.image,
+                    style: form.style,
                     news_subdomain: form.news_subdomain,
                     news_container_content_start: form.news_container_content_start,
                     news_container_content_end: form.news_container_content_end,

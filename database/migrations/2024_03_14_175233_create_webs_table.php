@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('description', 255);
             $table->string('image', 255)->nullable();
             $table->string('domain', 255);
+            $table->string('style', 255);
             $table->string('news_subdomain', 255)->nullable();
             $table->string('news_container_content_start', 255);
             $table->string('news_container_content_end', 255);

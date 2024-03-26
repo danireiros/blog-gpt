@@ -90,12 +90,9 @@ class MainController extends Controller
      * Ruteo de webs para generar noticias
      */
     public function routeWeb($webname){
-        if($webname == 'SoyMotor' || $webname == 'SoyMotor_Coches'){
-            $soyMotorController = new SoymotorController();
-            $soyMotorController->GenerateWebPost($webname);
-        }elseif($webname == 'Xataka' || $webname == 'XatakaMovil' || $webname == 'VidaExtra' || $webname == 'Espinof'){
-            $xatakaController = new XatakaController();
-            $xatakaController->GenerateWebPost($webname);
+        if($webname){
+            $WebContentController = new WebContentController();
+            $WebContentController->generatePostFromWebContent($webname);
         }else{
             return to_route('web.index')->with('message', 'Web '.$webname.' no tiene ruteo asignado. Asigne ruta en web.php');
         }
