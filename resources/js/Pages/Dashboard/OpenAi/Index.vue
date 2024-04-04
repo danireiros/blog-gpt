@@ -31,9 +31,23 @@
             <div class="container mt-5">
                 <div class="card mb-5">
                     <div class="card-body">
+                        <h2 class="mb-2 text-xl font-semibold text-gray-900 dark:text-white">Modelos activos</h2>
+                        <div class="col-span-6">
+                            <h2 class="font-semibold text-gray-900 dark:text-white">Texto</h2>
+                            <h2 class="mb-2 text-3xl font-semibold text-purple-700 dark:text-white">{{ usedTextModel }}</h2>
+                        </div>
+                        <div class="col-span-6">
+                            <h2 class="font-semibold text-gray-900 dark:text-white">Imagen</h2>
+                            <h2 class="mb-2 text-3xl font-semibold text-orange-700 dark:text-white">{{ usedImageModel }}</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-5">
+                    <div class="card-body">
                         <h2 class="mb-2 text-xl font-semibold text-gray-900 dark:text-white">Configuración</h2>
                         <div class="col-span-6">
-                            <h2 class="mb-2 font-semibold text-gray-900 dark:text-white">Modelo de texto en uso</h2>
+                            <h2 class="mb-2 font-semibold text-gray-900 dark:text-white">Cambiar modelo de texto</h2>
+                            
                             <select class="rounded-md w-full border-gray-300" v-model="defaultTextModel" @change="handleTextSelectionChange">
                                 <option v-for="utm in textModels" :key="utm.id" :value="utm.id">
                                     {{ utm.name }} - {{ utm.model_name }}
@@ -41,7 +55,7 @@
                             </select>
                         </div>
                         <div class="col-span-6">
-                            <h2 class="mb-2 font-semibold text-gray-900 dark:text-white">Modelo de imagen en uso</h2>
+                            <h2 class="mb-2 font-semibold text-gray-900 dark:text-white">Cambiar modelo de imagen</h2>
                             <select class="rounded-md w-full border-gray-300" v-model="defaultImageModel" @change="handleImageSelectionChange">
                                 <option v-for="uim in imageModels" :key="uim.id" :value="uim.id">
                                     {{ uim.name }} - {{ uim.model_name }}
@@ -164,7 +178,13 @@ export default {
         Pagination,
         ConfirmationModal
     },
-    data() {
+    props: {
+        imageModels: Object,
+        textModels: Object,
+        usedTextModel: Number,
+        usedImageModel: Number,
+    },
+    data(props) {
         return {
             confirmDeleteTextActive: false,
             confirmDeleteImageActive: false,
@@ -195,9 +215,6 @@ export default {
             router.post(route("image.model.default", defaultImageModel));
         },
     },
-    props: {
-        imageModels: Object,
-        textModels: Object,
-    }
+    
 }
 </script>

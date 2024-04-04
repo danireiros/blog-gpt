@@ -8,6 +8,8 @@ use App\Models\Post;
 use App\Models\Author;
 use GuzzleHttp\Client;
 use App\Models\PostLog;
+use App\Models\OpenAiChatModel;
+use App\Models\OpenAiImageModel;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Dashboard\PostController;
 
@@ -136,8 +138,14 @@ class WebContentController extends Controller
 
                     if(!$isPost){
                         $postController = new PostController();
-                        $postController->generate('gpt-4-0125-preview', 'dall-e-3', $web->style, $author, $new_content, $slug);
+                        $imageModel = OpenAiImageModel::where('using', 1)->pluck('model_name')->first();
+                        $textModel = OpenAiChatModel::where('using', 1)->pluck('model_name')->first();
+                        $postController->generate($textModel, $imageModel, $web->style, $author, $new_content, $slug);
                         $news_generated++;
+
+                        // TEST - solo genera una noticia
+                        die;
+
                         sleep(5);
                     }
                 }

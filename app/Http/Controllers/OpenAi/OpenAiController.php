@@ -23,15 +23,17 @@ class OpenAiController extends Controller
     public function index(){
         $textModels = OpenAiChatModel::all();
         $imageModels = OpenAiImageModel::all();
+        $usedTextModel = OpenAiChatModel::where('using', 1)->pluck('name')->first();
+        $usedImageModel = OpenAiImageModel::where('using', 1)->pluck('name')->first();
 
-        return Inertia('Dashboard/OpenAi/Index', compact('textModels', 'imageModels'));
+        return Inertia('Dashboard/OpenAi/Index', compact('textModels', 'imageModels', 'usedTextModel', 'usedImageModel'));
     }
 
     /**
      * Llamar a la api de chat de openai y recibir mensaje
      */
     public function postChatCompletion(
-        $model = 'gpt-4-0125-preview', 
+        $model, 
         $systemPrompt = null,
         $userPromt = null,
         $maxTokens = 1200,
@@ -71,7 +73,7 @@ class OpenAiController extends Controller
     /**
      * Llamar a la api de imagen de openai y recibir mensaje
      */
-    public function postImageGeneration($prompt, $model = 'dall-e-3'){
+    public function postImageGeneration($prompt, $model){
         $client = new Client();
 
         $content = strip_tags($prompt);
@@ -84,7 +86,7 @@ class OpenAiController extends Controller
             ],
             'json' => [
                 "model" => $model,
-                "prompt" => "Imagen estilo comic de $prompt, sin texto ni letras.",
+                "prompt" => $prompt,
                 "n" => 1,
                 "size" => "1024x1024"
             ],
