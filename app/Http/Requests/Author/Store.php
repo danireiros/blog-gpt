@@ -28,7 +28,7 @@ class Store extends FormRequest
             'system_prompt' => 'required|min:5|max:255',
             /* 'type' => 'required', */
             'category_id' => 'required|exists:categories,id',
-            'subcategory' => 'required|min:5|max:255',
+            //'subcategory' => 'required|min:5|max:255',
         ];
     }
 }

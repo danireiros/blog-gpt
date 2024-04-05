@@ -21,7 +21,7 @@
             <div class="container mt-5 m-auto p-5">
                 <div v-if="post" class="content-center">
                     <h5 class="mb-8 mt-4 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{{ post.title }}</h5>
-                    <img class="transition-all object-cover h-96 w-full rounded-lg" 
+                    <img class="transition-all object-cover w-full rounded-lg" 
                     :src="'/image/post/'+post.image" 
                     alt="" />
                     <p class="mb-8"><small>{{ formatDate(post.created_at) }}</small></p>

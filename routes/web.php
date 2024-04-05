@@ -15,6 +15,7 @@ use App\Http\Controllers\Dashboard\PostController;
 use App\Http\Controllers\Dashboard\AuthorController;
 use App\Http\Controllers\OpenAi\TextModelController;
 use App\Http\Controllers\OpenAi\ImageModelController;
+use App\Http\Controllers\Web\DashboardHomeController;
 use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Blog\PostController as BlogPostController;
 use App\Http\Controllers\OpenAi\OpenAiController as OpenAiPostController;
@@ -47,7 +48,7 @@ Route::middleware([
     'checkAdminRole',
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
+        return Inertia('Dashboard/Index');
     })->name('dashboard');
 
     // rutas
@@ -73,6 +74,7 @@ Route::middleware([
     // webs
     Route::resource('/web',                     MainController::class);
     Route::get('/web/generate/{webname}',       [MainController::class, 'routeWeb'])->name('web.generate');
+    Route::get('/web/link/generate/{link}',  [MainController::class, 'generateNewFromLink'])->name('web.link.generate');
 });
 
 // public

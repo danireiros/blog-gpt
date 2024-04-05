@@ -49,7 +49,7 @@ const hideFlashMessage = () => {
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink :href="route('blog.index')" :active="route().current('blog.index')">
-                                    Home
+                                    Inicio
                                 </NavLink>
                             </div>
 
@@ -152,7 +152,7 @@ const hideFlashMessage = () => {
                             Dashboard
                         </ResponsiveNavLink> -->
                         <ResponsiveNavLink :href="route('blog.index')" :active="route().current('blog.index')">
-                            Home
+                            Inicio
                         </ResponsiveNavLink>
 
                         <slot name="catnavs_responsive" />

@@ -44,7 +44,7 @@
                 </div> 
 
                 <div class="col-span-6">
-                    <InputLabel for="">Publicado</InputLabel>
+                    <InputLabel for="">Estado</InputLabel>
                     <InputError :message="errors.posted"/>
 
                     <div v-for="value in enumPosted" :key="value" :value="value">

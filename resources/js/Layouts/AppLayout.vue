@@ -52,15 +52,15 @@ const remove = () => {
                         <div class="flex">
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
-                                <Link :href="route('post.index')">
+                                <Link :href="route('blog.index')">
                                     <ApplicationMark class="block h-9 w-auto" />
                                 </Link>
                             </div>
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink :href="route('blog.index')" :active="route().current('blog.index')" class="text-indigo-700">
-                                    Home
+                                <NavLink :href="route('dashboard')" :active="route().current('dashboard')" class="text-indigo-700">
+                                    Inicio
                                 </NavLink>
                                 <NavLink :href="route('post.index')" :active="route().current('post.index')">
                                     Posts
@@ -223,8 +223,8 @@ const remove = () => {
                 <!-- Responsive Navigation Menu -->
                 <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink :href="route('blog.index')" :active="route().current('blog.index')">
-                            <span class="text-indigo-700">Home</span>
+                        <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                            <span class="text-indigo-700">Inicio</span>
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('category.index')" :active="route().current('category.index')">
                             Categorias

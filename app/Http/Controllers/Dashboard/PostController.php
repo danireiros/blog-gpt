@@ -194,7 +194,7 @@ class PostController extends Controller
      */
     public function generate($model, $imageModel, $imageStyle, $author, $content, $slug){
         // text
-        $systemPrompt = "$author->system_prompt. Reinterpreta la siguiente noticia a tu manera usando parrafos de maximo 5 lineas que sean cortos, una frase corta que sea el titulo dentro de un <h2> y ".mt_rand(4, 7)." parrafos metidos en sus <p>, entre parrafo y parrafo mete <p>&nbsp;</p>, destaca las palabras importantes en negrita usando <strong>.";
+        $systemPrompt = "$author->system_prompt. Reinterpreta la siguiente noticia a tu manera usando parrafos de maximo 5 lineas que sean cortos, una frase corta que sea el titulo en formato español dentro de un <h2> y ".mt_rand(4, 7)." parrafos metidos en sus <p>, entre parrafo y parrafo mete <p>&nbsp;</p>, destaca las palabras importantes en negrita usando <strong>.";
         $openAiController = new OpenAiController();
         $content = $openAiController->postChatCompletion(
             $model,

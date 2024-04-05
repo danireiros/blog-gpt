@@ -12,6 +12,7 @@ use App\Models\OpenAiChatModel;
 use App\Models\OpenAiImageModel;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Dashboard\PostController;
+use App\Models\WebLink;
 
 class WebContentController extends Controller
 {
@@ -127,26 +128,18 @@ class WebContentController extends Controller
                 $new_content = $this->getNewContent($link, $web->new_content_start, $web->new_content_end);
 
                 if($new_content){
-                    $author = Author::where('category_id', $web->category_id)->inRandomOrder()->first();
+                    $isWebLink = WebLink::where('link', $link)->first();
+                    if(!$isWebLink){
+                        $data = [
+                            'link' => $link,
+                            'web_id' => $web->id,
+                            'status' => 'Pendiente',
+                        ];
 
-                    $slug = strrchr($link, '/');
-                    if ($slug !== false) {
-                        $slug = substr($slug, 1);
-                    }
-
-                    $isPost = Post::where('slug', $slug)->first();
-
-                    if(!$isPost){
-                        $postController = new PostController();
-                        $imageModel = OpenAiImageModel::where('using', 1)->pluck('model_name')->first();
-                        $textModel = OpenAiChatModel::where('using', 1)->pluck('model_name')->first();
-                        $postController->generate($textModel, $imageModel, $web->style, $author, $new_content, $slug);
+                        $webLinkController = new WebLinkController();
+                        $webLinkController->store($data);    
+                        
                         $news_generated++;
-
-                        // TEST - solo genera una noticia
-                        die;
-
-                        sleep(5);
                     }
                 }
             }
@@ -158,9 +151,10 @@ class WebContentController extends Controller
                 'posts_generated' => $news_generated,
             ]);
 
-            return to_route('web.index')->with('fixedmessage', $web->name." revisada con exito con éxito: 
+            /* return to_route('web.index')->with('fixedmessage', $web->name." revisada con exito con éxito: 
                 links = $links_found
-                posts generados = $news_generated");
+                posts generados = $news_generated"); */
+            return to_route('web.index')->with('fixedmessage', "Guardados $news_generated links de la web $web->name");
         }else{
             return to_route('web.index')->with('fixedmessage', 'No hay contenido para generar');
         }
