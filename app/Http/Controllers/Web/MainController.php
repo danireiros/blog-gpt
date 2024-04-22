@@ -25,11 +25,11 @@ class MainController extends Controller
      */
     public function index(){
         $webs = Web::with('category')->get();
-        $webLinks = WebLink::with('web')->orderBy('created_at', 'desc')->paginate(10);
+        $webLinks = WebLink::with('web')->orderBy('created_at', 'desc')->paginate(30);
         return Inertia('Dashboard/Web/index', compact('webs', 'webLinks'));
     }
 
-    
+
     /**
      * Show the form for creating a new resource.
      */
@@ -50,7 +50,7 @@ class MainController extends Controller
             $imageController = new ImageController();
             $imageController->upload($request, $web, 'web');
         }
-        
+
         return to_route('web.index')->with('message', 'Web '. $web->name.' añadida con exito.');
     }
 
@@ -82,7 +82,7 @@ class MainController extends Controller
             $imageController = new ImageController();
             $imageController->upload($request, $web, 'web');
         }
-        
+
         return to_route('web.index')->with('message', 'Web '. $web->name.' actualizada con exito.');
     }
 
@@ -113,7 +113,7 @@ class MainController extends Controller
         $webLink = WebLink::where('id', $link)->with('web')->first();
         $webContentController = new WebContentController();
         $content = $webContentController->getNewContent($webLink->link, $webLink->web->new_content_start, $webLink->web->new_content_end);
-        
+
         if($content){
             $author = Author::where('category_id', $webLink->web->category_id)->inRandomOrder()->first();
 
@@ -124,8 +124,8 @@ class MainController extends Controller
 
             if($webLink->status != 'Usado'){
                 $postController = new DashboardPostController();
-                $imageModel = OpenAiImageModel::where('using', 1)->pluck('model_name')->first();
-                $textModel = OpenAiChatModel::where('using', 1)->pluck('model_name')->first();
+                $imageModel = OpenAiImageModel::where('using', 1)->first(); //->pluck('model_name')->first();
+                $textModel = OpenAiChatModel::where('using', 1)->first(); //->pluck('model_name')->first();
                 $post = $postController->generate($textModel, $imageModel, $webLink->web->style, $author, $content, $slug);
                 $webLink->update([
                     'status' => 'Usado'

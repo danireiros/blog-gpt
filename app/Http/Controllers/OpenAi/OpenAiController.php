@@ -33,7 +33,7 @@ class OpenAiController extends Controller
      * Llamar a la api de chat de openai y recibir mensaje
      */
     public function postChatCompletion(
-        $model, 
+        $model,
         $systemPrompt = null,
         $userPromt = null,
         $maxTokens = 1200,
@@ -46,7 +46,7 @@ class OpenAiController extends Controller
                 'Content-Type' => 'application/json',
             ],
             'json' => [
-                "model" => "$model",
+                "model" => "$model->model_name",
                 "messages" => [
                     [
                         "role" => "system",
@@ -57,8 +57,8 @@ class OpenAiController extends Controller
                         "content" => "$userPromt"
                     ]
                 ],
-                "temperature" => $temp,
-                "max_tokens" => $maxTokens,
+                "temperature" => $model->temperature,
+                "max_tokens" => $model->max_tokens,
                 "top_p" => 1
             ],
         ]);
@@ -85,10 +85,10 @@ class OpenAiController extends Controller
                 'Content-Type' => 'application/json',
             ],
             'json' => [
-                "model" => $model,
+                "model" => $model->model_name,
                 "prompt" => $prompt,
                 "n" => 1,
-                "size" => "1024x1024"
+                "size" => $model->size
             ],
         ]);
 

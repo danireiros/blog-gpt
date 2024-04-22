@@ -57,7 +57,7 @@ class WebContentController extends Controller
             }
             if (strpos($link, '/user/') === false && (strpos($link, '/autor/') === false && strpos($link, '#to-comments') === false && strpos($link, '/categoria/') === false)) {
                 array_push($links, $link);
-            } 
+            }
         }
 
         $links = $this->removeDuplicatedLinks($links);
@@ -115,9 +115,9 @@ class WebContentController extends Controller
         $news_generated = 0;
 
         $content = $this->getNewsContainer(
-            $web->news_container_content_start, 
-            $web->news_container_content_end, 
-            $web->domain, 
+            $web->news_container_content_start,
+            $web->news_container_content_end,
+            $web->domain,
             $web->news_subdomain
         );
 
@@ -137,8 +137,8 @@ class WebContentController extends Controller
                         ];
 
                         $webLinkController = new WebLinkController();
-                        $webLinkController->store($data);    
-                        
+                        $webLinkController->store($data);
+
                         $news_generated++;
                     }
                 }
@@ -151,13 +151,10 @@ class WebContentController extends Controller
                 'posts_generated' => $news_generated,
             ]);
 
-            /* return to_route('web.index')->with('fixedmessage', $web->name." revisada con exito con éxito: 
-                links = $links_found
-                posts generados = $news_generated"); */
             return to_route('web.index')->with('fixedmessage', "Guardados $news_generated links de la web $web->name");
         }else{
             return to_route('web.index')->with('fixedmessage', 'No hay contenido para generar');
         }
-            
+
     }
 }

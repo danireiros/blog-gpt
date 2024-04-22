@@ -36,7 +36,7 @@
                                             <Link as="button" class="text-sm text-purple-400 hover:text-purple-700 mx-2" :href="route('web.edit', w.id)">Editar</Link>
                                             <button class="text-sm text-red-400 hover:text-red-700 mx-2"
                                                     @click="confirmDeleteActive = true; deleteWebRow = a.id;">Eliminar</button>
-                                            
+
                                         </td>
                                         <td class="p-2">
                                             <Link as="button" class="link-button-default mb-3 hover:text-gray-100" :href="route('web.generate', w.name)">Obtener ultimos links</Link>
@@ -86,15 +86,17 @@
                                             </div>
                                         </td>
                                         <td class="p-2">
-                                            <Link as="button" class="link-button-default mb-3 hover:text-gray-100" :href="route('web.link.generate', w.id)">Generar noticia</Link>
-                                        </td>
+                                            <Link as="button" class="link-button-default hover:text-gray-100" :href="route('web.link.generate', w.id)">Generar noticia</Link>
+                                            <!-- <Link as="button" class="text-sm text-red-400 hover:text-red-700 mx-2" method="delete" :href="route('weblink.destroy', w.id)">Eliminar</Link>
+                                            <button class="text-sm text-red-400 hover:text-red-700 mx-2" @click="deleteWebLink(w.id)">Eliminar</button>
+                                         --></td>
                                     </tr>
                                 </tbody>
                             </table>
 
                             <pagination :links="webLinks"/>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -113,12 +115,22 @@ export default {
             confirmDeleteActive: false,
             deleteWebRow: "",
         }
-    }, 
+    },
     methods: {
         deleteWeb() {
-            router.delete(route("web.destroy", this.deleteWebRow));
+            router.delete(route("web.destroy", this.deleteWebRow , {
+                preserveState: true,
+                preserveScroll: true
+            }));
             this.confirmDeleteActive = false;
-        }, 
+        },
+
+        /* deleteWebLink(weblink) {
+            router.delete(route("weblink.destroy", weblink, {
+                preserveState: true,
+                preserveScroll: true
+            }));
+        } */
     },
     components: {
         Link,
