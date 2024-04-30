@@ -19,7 +19,7 @@ import CKEditor from '@ckeditor/ckeditor5-vue';
 
 import '@oruga-ui/theme-bulma/dist/bulma.css'
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = import.meta.env.VITE_APP_NAME || 'InfoParaTi';
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,

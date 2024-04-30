@@ -89,9 +89,10 @@ class MainController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Web $web)
     {
-        //
+        $web->delete();
+        return to_route('web.index')->with('message', 'Web eliminada con exito.');
     }
 
     /**

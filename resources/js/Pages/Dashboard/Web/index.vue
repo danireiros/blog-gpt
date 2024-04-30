@@ -1,4 +1,19 @@
 <template>
+
+    <confirmation-modal :show="confirmDeleteActive">
+        <template v-slot:title> Confirme la acción </template>
+
+        <template v-slot:content>
+            <p>¿Seguro que quieres eliminar la web?</p>
+        </template>
+
+        <template v-slot:footer>
+            <o-button variant="danger" @click="deleteWeb">Eliminar</o-button>
+            <div class="mr-3"></div>
+            <o-button @click="confirmDeleteActive = false">Cancelar</o-button>
+        </template>
+    </confirmation-modal>
+
     <AppLayout>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="container mt-5">
@@ -35,7 +50,7 @@
                                         <td class="p-2">
                                             <Link as="button" class="text-sm text-purple-400 hover:text-purple-700 mx-2" :href="route('web.edit', w.id)">Editar</Link>
                                             <button class="text-sm text-red-400 hover:text-red-700 mx-2"
-                                                    @click="confirmDeleteActive = true; deleteWebRow = a.id;">Eliminar</button>
+                                                    @click="confirmDeleteActive = true; deleteWebRow = w.id;">Eliminar</button>
 
                                         </td>
                                         <td class="p-2">
@@ -55,6 +70,9 @@
 
                         <div v-if="webLinks.data.length > 0" class="mt-8">
                             <h2 class="mb-2 text-xl font-semibold text-gray-900 dark:text-white">Links de noticias</h2>
+                            <div class="my-4">
+                                <button class="text-sm text-red-400 hover:text-red-700" @click="deleteWebLinks()">Limpiar links</button>
+                            </div>
                             <table class="w-full border">
                                 <thead class="bg-gray-200">
                                     <tr class="border-b">
@@ -96,6 +114,11 @@
 
                             <pagination :links="webLinks"/>
                         </div>
+                        <div v-else class="mt-8">
+                            <div class="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4" role="alert">
+                                <p>No hay links</p>
+                            </div>
+                        </div>
 
                     </div>
                 </div>
@@ -124,13 +147,12 @@ export default {
             }));
             this.confirmDeleteActive = false;
         },
-
-        /* deleteWebLink(weblink) {
-            router.delete(route("weblink.destroy", weblink, {
+        deleteWebLinks() {
+            router.delete(route("weblink.remove", {
                 preserveState: true,
                 preserveScroll: true
             }));
-        } */
+        }
     },
     components: {
         Link,

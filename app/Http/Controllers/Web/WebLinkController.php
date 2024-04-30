@@ -64,4 +64,13 @@ class WebLinkController extends Controller
         $weblink->delete();
         return to_route('web.index')->with('message', 'Link eliminado con exito.');
     }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroyAll()
+    {
+        WebLink::truncate();
+        return to_route('web.index')->with('message', 'Links eliminados con exito.');
+    }
 }

@@ -21,21 +21,25 @@
             <div class="container mt-5 m-auto p-5">
                 <div v-if="post" class="content-center">
                     <h5 class="mb-8 mt-4 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{{ post.title }}</h5>
-                    <img class="transition-all object-cover w-full rounded-lg" 
-                    :src="'/image/post/'+post.image" 
+                    <img class="transition-all object-cover w-full rounded-lg"
+                    :src="'/image/post/'+post.image"
                     alt="" />
                     <p class="mb-8"><small>{{ formatDate(post.created_at) }}</small></p>
                     <div class="inline-flex text-gray-500 mb-8">
                         <img class="h-8 w-8 rounded-full mr-3" :src="'/image/author/'+post.author.image"><small class="mt-2 font-semibold">{{ post.author.name }}<span class="text-sm text-gray-300 font-thin"> - {{ post.author.description }}</span></small>
                     </div>
                     <p :style="{ fontFamily: 'IBM', fontWeight: 'normal', fontStyle: 'normal' }" class="mb-3 max-w-xl text-xl leading-relaxed font-normal text-gray-700 dark:text-gray-400" v-html="post.text"></p>
-                </div> 
+                </div>
                 <div v-else>
                     <div class="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4 mt-8" role="alert">
                         <p>Ups! No tenemos ni idea donde está este artículo...</p>
                     </div>
                 </div>
             </div>
+
+            <hr>
+            <CommentSection></CommentSection>
+
         </div>
     </BlogLayout>
 </template>
@@ -47,7 +51,9 @@
     import Pagination from '@/Shared/Pagination.vue';
     import NavLink from '@/Components/NavLink.vue';
     import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
-    
+
+    import CommentSection from '@/Components/Post/CommentSection.vue';
+
     export default {
         data() {
             return {
@@ -74,6 +80,7 @@
             Pagination,
             NavLink,
             ResponsiveNavLink,
+            CommentSection,
         },
         props: {
             post: Object,

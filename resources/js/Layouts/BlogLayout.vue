@@ -35,16 +35,29 @@ const hideFlashMessage = () => {
 
         <div class="min-h-screen pb-28 bg-neutral-50 dark:bg-gray-900">
             <nav class="bg-neutral-100 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+
+                <div class="w-100 px-2 flex justify-center h-12">
+                    <h2 class="m-2 text-indigo-400">
+                        <Link :href="route('blog.index')">
+                            <ApplicationMark class="block h-9 w-auto inline-flex" />
+                            <h1 class="ml-2 text-4xl inline-flex text-indigo-800 text-2xl font-bold tracking-tightdark:text-white text-indigo-800 transition"
+                            :style="{ fontFamily: 'Jersey', fontWeight: 'normal', fontStyle: 'normal' }">
+                                InfoParaTi
+                            </h1>
+                        </Link>
+                    </h2>
+                </div>
+
                 <!-- Primary Navigation Menu -->
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
                         <div class="flex">
                             <!-- Logo -->
-                            <div class="shrink-0 flex items-center">
+                            <!-- <div class="shrink-0 flex items-center">
                                 <Link :href="route('blog.index')">
-                                    <ApplicationMark class="block h-9 w-auto" /> 
+                                    <ApplicationMark class="block h-9 w-auto" />
                                 </Link>
-                            </div>
+                            </div> -->
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
@@ -88,7 +101,7 @@ const hideFlashMessage = () => {
                                         </DropdownLink>
 
                                         <DropdownLink :href="route('profile.show')">
-                                            Profile
+                                            Perfil
                                         </DropdownLink>
 
                                         <DropdownLink v-if="$page.props.jetstream.hasApiFeatures" :href="route('api-tokens.index')">
@@ -100,7 +113,7 @@ const hideFlashMessage = () => {
                                         <!-- Authentication -->
                                         <form @submit.prevent="logout">
                                             <DropdownLink as="button">
-                                                Log Out
+                                                Cerrar sesión
                                             </DropdownLink>
                                         </form>
                                     </template>
@@ -181,7 +194,7 @@ const hideFlashMessage = () => {
                             </ResponsiveNavLink>
 
                             <ResponsiveNavLink :href="route('profile.show')" :active="route().current('profile.show')">
-                                Profile
+                                Perfil
                             </ResponsiveNavLink>
 
                             <ResponsiveNavLink v-if="$page.props.jetstream.hasApiFeatures" :href="route('api-tokens.index')" :active="route().current('api-tokens.index')">
@@ -191,7 +204,7 @@ const hideFlashMessage = () => {
                             <!-- Authentication -->
                             <form method="POST" @submit.prevent="logout">
                                 <ResponsiveNavLink as="button">
-                                    Log Out
+                                    Cerrar sesión
                                 </ResponsiveNavLink>
                             </form>
                         </div>
@@ -217,7 +230,7 @@ const hideFlashMessage = () => {
                         </div>
                     </div>
                 </transition>
-                
+
                 <slot />
             </main>
         </div>

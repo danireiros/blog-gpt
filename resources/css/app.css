@@ -14,7 +14,7 @@
             font-size: revert;
             font-weight: revert;
         }
-    
+
         ol,
         ul {
             list-style: revert;
@@ -78,5 +78,19 @@
     font-family: 'IBM-bold';
     src: url('../../public/fonts/IBM/IBMPlexSerif-Bold.ttf') format('truetype');
     font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Jersey';
+    src: url('../../public/fonts/Jersey10/Jersey10-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Pacifico';
+    src: url('../../public/fonts/Pacifico/Pacifico-Regular.ttf') format('truetype');
+    font-weight: normal;
     font-style: normal;
 }

@@ -77,6 +77,7 @@ Route::middleware([
     Route::get('/web/generate/{webname}',       [MainController::class, 'routeWeb'])->name('web.generate');
     Route::get('/web/link/generate/{link}',     [MainController::class, 'generateNewFromLink'])->name('web.link.generate');
     Route::resource('/weblink',                 WebLinkController::class)->only('destroy');
+    Route::delete('/weblink',                   [WebLinkController::class, 'destroyAll'])->name('weblink.remove');
 });
 
 // public
