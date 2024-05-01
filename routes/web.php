@@ -19,6 +19,7 @@ use App\Http\Controllers\Web\DashboardHomeController;
 use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Blog\PostController as BlogPostController;
 use App\Http\Controllers\OpenAi\OpenAiController as OpenAiPostController;
+use App\Http\Controllers\Web\CommentController;
 use App\Http\Controllers\Web\WebLinkController;
 
 /*
@@ -74,6 +75,7 @@ Route::middleware([
 
     // webs
     Route::resource('/web',                     MainController::class);
+    Route::resource('/comments',                CommentController::class);
     Route::get('/web/generate/{webname}',       [MainController::class, 'routeWeb'])->name('web.generate');
     Route::get('/web/link/generate/{link}',     [MainController::class, 'generateNewFromLink'])->name('web.link.generate');
     Route::resource('/weblink',                 WebLinkController::class)->only('destroy');

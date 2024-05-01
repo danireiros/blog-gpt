@@ -37,8 +37,8 @@
                 </div>
             </div>
 
-            <hr>
-            <CommentSection></CommentSection>
+            <hr class="mb-0">
+            <CommentSection :post_id="post.id"></CommentSection>
 
         </div>
     </BlogLayout>

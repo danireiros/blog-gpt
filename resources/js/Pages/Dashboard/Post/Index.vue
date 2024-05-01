@@ -116,7 +116,7 @@
                                                 <template v-else>&darr;</template>
                                             </template>
                                         </th>
-                                        <!-- <th class="p-3">Slug</th> -->   
+                                        <!-- <th class="p-3">Slug</th> -->
                                         <!-- <th class="p-3 hover:bg-gray-300 cursor-pointer" @click="sort('text')">
                                             Texto
                                             <template v-if="sortColumn == 'text'">
@@ -201,7 +201,7 @@
     import TextInput from "@/Components/TextInput.vue";
 
     import vueDebounce from 'vue-debounce'
-    
+
     export default {
         directives: {
             debounce: vueDebounce({ lock: true })
@@ -220,7 +220,7 @@
             filter_from: String,
             filter_to: String,
             sortColumn: String,
-            sortDirection: String, 
+            sortDirection: String,
         },
         data(props) {
             return {
@@ -235,12 +235,12 @@
                 to: props.filter_to,
                 column: '',
             }
-        }, 
+        },
         methods: {
             deletePost() {
                 router.delete(route("post.destroy", this.deletePostRow));
                 this.confirmDeleteActive = false;
-            }, 
+            },
             customSearch(column = 'id') {
                 router.get(route('post.index'),{
                     category_id: this.category_id,
@@ -271,7 +271,7 @@
             TextInput,
         },
         setup(props) {
-            
+
         }
     }
 </script>
