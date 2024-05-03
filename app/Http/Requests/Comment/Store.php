@@ -28,6 +28,7 @@ class Store extends FormRequest
             'likes' => 'nullable',
             'user_id' => 'nullable',
             'post_id' => 'nullable',
+            'parent_comment_id' => 'nullable',
         ];
     }
 }

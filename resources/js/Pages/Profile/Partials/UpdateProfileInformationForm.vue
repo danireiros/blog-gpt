@@ -73,6 +73,10 @@ const clearPhotoFileInput = () => {
         photoInput.value.value = null;
     }
 };
+
+const profilePhoto = (url) => {
+    return url.replace(/.*\/profile-photos/, '/image/profile-photos');
+};
 </script>
 
 <template>
@@ -101,7 +105,9 @@ const clearPhotoFileInput = () => {
 
                 <!-- Current Profile Photo -->
                 <div v-show="! photoPreview" class="mt-2">
-                    <img :src="user.profile_photo_url" :alt="user.name" class="rounded-full h-20 w-20 object-cover">
+                    <img class="h-24 w-24 rounded-full"
+                        :src="profilePhoto(user.profile_photo_url)"
+                        alt="" />
                 </div>
 
                 <!-- New Profile Photo Preview -->

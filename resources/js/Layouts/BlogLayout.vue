@@ -6,6 +6,7 @@ import Banner from '@/Components/Banner.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
+import Footer from '@/Components/Footer.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 
 defineProps({
@@ -24,6 +25,10 @@ const visibleFlashContainer = ref(true);
 const hideFlashMessage = () => {
     setTimeout(() => visibleFlashContainer.value = false, 3000);
     return true;
+};
+
+const profilePhoto = (url) => {
+    return url.replace(/.*\/profile-photos/, '/image/profile-photos');
 };
 </script>
 
@@ -76,7 +81,9 @@ const hideFlashMessage = () => {
                                     <template #trigger>
                                         <span class="inline-flex items-center mr-3 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition duration-150 ease-in-out">{{ $page.props.auth.user.name }}</span>
                                         <button v-if="$page.props.jetstream.managesProfilePhotos" class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
-                                            <img class="h-8 w-8 rounded-full object-cover" :src="$page.props.auth.user.profile_photo_url" :alt="$page.props.auth.user.name">
+                                            <img class="h-8 w-8 rounded-full"
+                                                :src="profilePhoto($page.props.auth.user.profile_photo_url)"
+                                                alt="" />
                                         </button>
 
                                         <span v-else class="inline-flex rounded-md">
@@ -122,7 +129,7 @@ const hideFlashMessage = () => {
                         </div>
                         <div v-else  class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                             <NavLink :href="route('login')" :active="route().current('login')">
-                                Login
+                                Unirse
                             </NavLink>
                             <NavLink :href="route('register')" :active="route().current('register')">
                                 Registrarse
@@ -164,6 +171,15 @@ const hideFlashMessage = () => {
                         <!-- <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
                         </ResponsiveNavLink> -->
+                        <div v-if="!$page.props.auth.user">
+                            <ResponsiveNavLink :href="route('login')" :active="route().current('login')">
+                                Unirse
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink :href="route('register')" :active="route().current('register')">
+                                Registrarse
+                            </ResponsiveNavLink>
+                        </div>
+
                         <ResponsiveNavLink :href="route('blog.index')" :active="route().current('blog.index')">
                             Inicio
                         </ResponsiveNavLink>
@@ -175,7 +191,9 @@ const hideFlashMessage = () => {
                     <div v-if="$page.props.auth.user" class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
                         <div class="flex items-center px-4">
                             <div v-if="$page.props.jetstream.managesProfilePhotos" class="shrink-0 me-3">
-                                <img class="h-10 w-10 rounded-full object-cover" :src="$page.props.auth.user.profile_photo_url" :alt="$page.props.auth.user.name">
+                                <img class="h-8 w-8 rounded-full"
+                                    :src="profilePhoto($page.props.auth.user.profile_photo_url)"
+                                    alt="" />
                             </div>
 
                             <div>
@@ -234,5 +252,8 @@ const hideFlashMessage = () => {
                 <slot />
             </main>
         </div>
+
+        <Footer></Footer>
+
     </div>
 </template>

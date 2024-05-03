@@ -6,6 +6,7 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Comment;
 use Ramsey\Uuid\Type\Integer;
 
 class PostController extends Controller
@@ -14,7 +15,11 @@ class PostController extends Controller
      * Display all posts
      */
     public function index(){
-        $posts = Post::with(['category', 'author'])->where('posted', true)->orderBy('created_at', 'desc')->paginate(11);
+        $posts = Post::with(['category', 'author'])
+            ->withCount('comments')
+            ->where('posted', true)
+            ->orderBy('created_at', 'desc')
+            ->paginate(11);
 
         $categories = Category::all();
         return Inertia('Blog/Index', compact('posts', 'categories'));
@@ -43,7 +48,18 @@ class PostController extends Controller
             ->where('slug', $slug)
             ->first();
 
+        $comments = Comment::with('user')
+            ->where('post_id', $post->id)
+            ->orderByRaw('CASE WHEN parent_comment_id IS NULL THEN likes END desc, CASE WHEN parent_comment_id IS NOT NULL THEN created_at END asc')
+            ->get();
+
+        if(auth()->id()){
+            $user = 'logged';
+        }else{
+            $user = 'not';
+        }
+
         $categories = Category::all();
-        return Inertia('Blog/Post/Index', compact('post', 'categories'));
+        return Inertia('Blog/Post/Index', compact('post', 'categories', 'comments', 'user'));
     }
 }

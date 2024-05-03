@@ -38,7 +38,7 @@
             </div>
 
             <hr class="mb-0">
-            <CommentSection :post_id="post.id"></CommentSection>
+            <CommentSection :post_id="post.id" :comments="comments" :user="user"></CommentSection>
 
         </div>
     </BlogLayout>
@@ -55,11 +55,6 @@
     import CommentSection from '@/Components/Post/CommentSection.vue';
 
     export default {
-        data() {
-            return {
-            font: 'MiFuente, sans-serif' // Reemplaza 'MiFuente' con el nombre de tu fuente
-            };
-        },
         methods: {
             formatDate(dateString) {
                 const date = new Date(dateString);
@@ -85,6 +80,8 @@
         props: {
             post: Object,
             categories: Object,
+            comments: Object,
+            user: String,
         }
     }
 </script>
