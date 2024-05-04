@@ -239,6 +239,20 @@ const profilePhoto = (url) => {
 
             <!-- Page Content -->
             <main>
+
+                <div v-if="$page.props.auth.user">
+                    <div v-if="$page.props.auth.user.role == 3">
+                        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-8">
+                            <div class="container my-2 rounded-sm shadow-sm bg-red-100 border-l-4 border-red-500 text-red-700 p-8" role="alert">
+                                <p><strong class="text-red-700">Cuenta baneada</strong></p>
+                                <br>
+                                <p>No puedes comentar ni dar likes.</p>
+                                <p>Contacte a <a href="mailto:contacto@infoparati.es">contacto@infoparati.es</a> para mas información.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <transition>
                     <div v-if="visibleFlashContainer">
                         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">

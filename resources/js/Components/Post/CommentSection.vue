@@ -9,10 +9,10 @@
                 <div v-if="!comment.parent_comment_id">
                     <div class="w-100 inline-flex">
                         <img class="h-8 w-8 rounded-full"
-                        :src="'/image/'+comment.user.profile_photo_path"
+                        :src="comment.user && comment.user.profile_photo_path ? '/image/' + comment.user.profile_photo_path : '/image/profile-photos/default.jpg'"
                         alt="" />
 
-                        <span class="ml-4 mt-1 font-bold">{{ comment.user.name }}</span>
+                        <span class="ml-4 mt-1 font-bold">{{ comment.user && comment.user.name ? comment.user.name : 'Usuario inactivo' }}</span>
                         <span class="ml-4 mt-1 text-gray-400">{{ formatDate(comment.created_at) }}</span>
                     </div>
                     <p class="text-gray-500" style="font-weight: 500;">{{ comment.text }}</p>
@@ -29,11 +29,13 @@
                 <div v-for="reply in comments" :key="reply.id" class="ml-8">
                     <div v-if="reply.parent_comment_id == comment.id">
                         <div class="w-100 inline-flex">
+
                             <img class="h-8 w-8 rounded-full"
-                            :src="'/image/'+reply.user.profile_photo_path"
+                            :src="reply.user && reply.user.profile_photo_path ? '/image/' + reply.user.profile_photo_path : '/image/profile-photos/default.jpg'"
                             alt="" />
 
-                            <span class="ml-4 mt-1 font-bold">{{ reply.user.name }}</span>
+                            <span class="ml-4 mt-1 font-bold">{{ reply.user && reply.user.name ? reply.user.name : 'Usuario inactivo' }}</span>
+
                             <span class="ml-4 mt-1 text-gray-400">{{ formatDate(reply.created_at) }}</span>
                         </div>
                         <p class="text-gray-500" style="font-weight: 500;">{{ reply.text }}</p>

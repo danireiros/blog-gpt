@@ -66,6 +66,9 @@ const profilePhoto = (url) => {
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')" class="text-indigo-700">
                                     Inicio
                                 </NavLink>
+                                <NavLink :href="route('user.index')" :active="route().current('user.index')">
+                                    Usuarios
+                                </NavLink>
                                 <NavLink :href="route('post.index')" :active="route().current('post.index')">
                                     Posts
                                 </NavLink>
@@ -231,6 +234,9 @@ const profilePhoto = (url) => {
                     <div class="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                             <span class="text-indigo-700">Inicio</span>
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('user.index')" :active="route().current('user.index')">
+                            Usuarios
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('category.index')" :active="route().current('category.index')">
                             Categorias

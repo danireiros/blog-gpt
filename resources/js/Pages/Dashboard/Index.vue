@@ -2,7 +2,7 @@
     <AppLayout>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="container mt-5">
-                <div class="card">
+                <div class="card mb-4">
                     <div class="card-body">
                         <h2 class="text-4xl mb-4 font-bold text-gray-900 dark:text-white">
                             Bienvenido {{ $page.props.auth.user.name }}
@@ -22,7 +22,7 @@
                     </div>
                 </div>
 
-                <div class="card">
+                <div class="card mb-4">
                     <div class="card-body">
                         <h2 class="text-4xl mb-4 font-bold text-gray-900 dark:text-white">
                             ¡Primeros pasos!
@@ -36,13 +36,13 @@
                         <p>Asignele un nombre, avatar, descripción, categoría y una subcategoria opcional</p>
                         <p>Escriba un prompt que será usado por la IA para generar las noticias.</p>
                         <p>Ejemplo de prompt: <span class="italic">Amante del deporte de motor, narra todo de forma muy épica y con mucha emoción</span></p>
-                    
+
                         <h2 class="mt-4 text-xl font-semibold text-gray-900 dark:text-white">3) Añada un modelo de texto</h2>
                         <p>Entre <a href="https://platform.openai.com/docs/models">aqui</a> y busque su modelo de texto a usar</p>
                         <p>Ejemplo: <span class="italic">gpt-4-0125-preview</span></p>
                         <p>Ahora entre en <a :href="route('text.create')">añadir modelo de texto</a> para añadir el modelo</p>
                         <p>Pongale el nombre que quiera y en Nombre del modelo de openAi añada el nombre como esta en openai, en este caso <span class="italic">gpt-4-0125-preview</span></p>
-                    
+
                         <h2 class="mt-4 text-xl font-semibold text-gray-900 dark:text-white">4) Añada un modelo de imagen</h2>
                         <p>Entre <a href="https://platform.openai.com/docs/models">aqui</a> y busque su modelo de imagen a usar</p>
                         <p>Ejemplo: <span class="italic">dall-e-3</span></p>
@@ -52,7 +52,7 @@
                     </div>
                 </div>
 
-                <div class="card">
+                <div class="card mb-4">
                     <div class="card-body">
                         <h2 class="text-4xl mb-4 font-bold text-gray-900 dark:text-white">
                             ¡Genere noticias con IA!
@@ -71,7 +71,7 @@
                     </div>
                 </div>
 
-                <div class="card">
+                <div class="card mb-4">
                     <div class="card-body">
                         <h2 class="text-4xl mb-4 font-bold text-gray-900 dark:text-white">
                             Crear noticias manualmente

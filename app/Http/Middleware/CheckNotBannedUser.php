@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class CheckAdminRole
+class CheckNotBannedUser
 {
     /**
      * Handle an incoming request.
@@ -18,7 +18,7 @@ class CheckAdminRole
     public function handle($request, Closure $next)
     {
         if (Auth::check()) {
-            if (Auth::user()->role == 1) {
+            if (Auth::user()->role != 3) {
                 return $next($request);
             }
         }

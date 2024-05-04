@@ -21,6 +21,7 @@ use App\Http\Controllers\Blog\PostController as BlogPostController;
 use App\Http\Controllers\OpenAi\OpenAiController as OpenAiPostController;
 use App\Http\Controllers\Blog\CommentController;
 use App\Http\Controllers\Web\WebLinkController;
+use App\Http\Controllers\Dashboard\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,16 +34,6 @@ use App\Http\Controllers\Web\WebLinkController;
 |
 */
 
-/*
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-}); */
-
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -52,6 +43,10 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return Inertia('Dashboard/Index');
     })->name('dashboard');
+
+    // usuarios
+    Route::get('/user',                                     [UserController::class, 'index'])->name('user.index');
+    Route::post('/user/ban/{user}',                         [UserController::class, 'ban'])->name('user.ban');
 
     // rutas
     Route::resource('/author',                              AuthorController::class);
@@ -83,8 +78,16 @@ Route::middleware([
 });
 
 // public
-Route::resource('/comments',            CommentController::class);
 Route::get('/',                         [BlogPostController::class, 'index'])->name('blog.index');
 Route::get('/category/{category}',      [BlogPostController::class, 'category'])->name('blog.category');
 Route::get('/blog/{post}',              [BlogPostController::class, 'show'])->name('blog.post.show');
-Route::post('/comments/{comment}/like', [CommentController::class, 'like'])->name('comments.like');
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+    'CheckNotBannedUser',
+])->group(function () {
+    Route::resource('/comments',            CommentController::class);
+    Route::post('/comments/{comment}/like', [CommentController::class, 'like'])->name('comments.like');
+});
