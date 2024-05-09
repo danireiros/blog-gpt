@@ -20,7 +20,8 @@
                 <div class="card  mb-10">
                     <div class="card-body">
                         <h2 class="mb-2 text-xl font-semibold text-gray-900 dark:text-white">Posts</h2>
-                        <Link class="link-button-default mb-3 hover:text-gray-100" :href="route('post.create')">Crear nuevo</Link>
+                        <Link class="link-button-default mb-3 hover:text-gray-100 mr-4" :href="route('post.create')">Crear nuevo</Link>
+                        <Link class="link-button-default mb-3 hover:text-gray-100" :href="route('post.create.custom')">Crear nuevo post con ayuda de IA</Link>
                         <h2 class="mb-2 font-semibold text-gray-900 dark:text-white">Busqueda</h2>
                         <div class="">
                             <InputLabel for="">Texto</InputLabel>

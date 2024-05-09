@@ -54,6 +54,8 @@ Route::middleware([
     Route::resource('/post',                                PostController::class);
     Route::post('/post/upload/{post}',                      [PostController::class, 'upload'])->name('post.upload');
     Route::get('/post/file/upload/{post}',                  [PostController::class, 'create_file'])->name('post.create.upload');
+    Route::get('/post/custom/create',                       [PostController::class, 'customPostCreate'])->name('post.create.custom');
+    Route::post('/post/custom/store',                       [PostController::class, 'customPostStore'])->name('post.store.custom');
 
     // openai
     Route::get('/openai',                                   [OpenAiPostController::class, 'index'])->name('openai.index');

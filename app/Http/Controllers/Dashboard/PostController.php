@@ -9,9 +9,12 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\Post\Put;
 use App\Http\Requests\Post\Store;
+use App\Http\Requests\Post\Custom\Store as CustomStore;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\OpenAi\OpenAiController;
 use App\Http\Controllers\Tools\TextController;
+use App\Models\OpenAiChatModel;
+use App\Models\OpenAiImageModel;
 use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
@@ -203,7 +206,7 @@ class PostController extends Controller
      */
     public function generate($model, $imageModel, $imageStyle, $author, $content, $slug){
         // text
-        $systemPrompt = "$author->system_prompt. Reinterpreta la siguiente noticia a tu manera usando parrafos de maximo 5 lineas que sean cortos, una frase corta resumen de todo como encabezado dentro de un <h2> y ".mt_rand(4, 7)." parrafos metidos en sus <p>, entre parrafo y parrafo mete <p>&nbsp;</p>, destaca las palabras importantes en negrita usando <strong>.";
+        $systemPrompt = "$author->system_prompt. Reinterpreta la siguiente noticia a tu manera escribiendola diferente usando parrafos de maximo 5 lineas que sean cortos, una frase corta resumen de todo como encabezado dentro de un <h2> y ".mt_rand(4, 7)." parrafos metidos en sus <p>, entre parrafo y parrafo mete <p>&nbsp;</p>, destaca las palabras importantes en negrita usando <strong>.";
         $openAiController = new OpenAiController();
         $content = $openAiController->postChatCompletion(
             $model,
@@ -248,9 +251,41 @@ class PostController extends Controller
         return $post;
     }
 
+    /**
+     * Genera post random
+     */
     public function generateRandom(){
         $author = Author::inRandomOrder()->first();
-        $post = $this->generate('gpt-4-0125-preview', 'dall-e-3', 'dibujo animado', $author, $author->subcategory, null);
+        $model = OpenAiChatModel::where('using', 1)->first();
+        $imageModel = OpenAiImageModel::where('using', 1)->first();
+
+        $post = $this->generate($model, $imageModel, 'dibujo animado', $author, 'noticia sobre '.$author->subcategory, null);
+
+        return to_route('post.index')->with('message', ''. $post->title.' generado con IA con exito.');
+    }
+
+    /**
+     * Mostrar formulario para post manual con IA
+     */
+    public function customPostCreate(){
+        $authors = Author::with('category')->get();
+        return Inertia::render('Dashboard/Post/Custom/Create', compact('authors'));
+    }
+
+    /**
+     * Guardar post manual con IA
+     */
+    public function customPostStore(CustomStore $request){
+        $content = $request->content;
+        if($request->title){
+            $content = '<h2>' . $request->title . '</h2> ' . $request->content;
+        }
+
+        $model = OpenAiChatModel::where('using', 1)->first();
+        $imageModel = OpenAiImageModel::where('using', 1)->first();
+        $author = Author::find($request->author_id);
+
+        $post = $this->generate($model, $imageModel, $request->style, $author, $content, null);
 
         return to_route('post.index')->with('message', ''. $post->title.' generado con IA con exito.');
     }
