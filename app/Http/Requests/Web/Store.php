@@ -31,6 +31,8 @@ class Store extends FormRequest
             'style' => 'max:255',
             'news_container_content_start' => 'required|min:5|max:255',
             'news_container_content_end' => 'required|min:5|max:255',
+            'new_content_start' => 'required|min:5|max:255',
+            'new_content_end' => 'required|min:5|max:255',
         ];
     }
 }

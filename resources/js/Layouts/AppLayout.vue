@@ -40,6 +40,7 @@ const remove = () => {
 const profilePhoto = (url) => {
     return url.replace(/.*\/profile-photos/, '/image/profile-photos');
 };
+
 </script>
 
 <template>
@@ -172,7 +173,7 @@ const profilePhoto = (url) => {
                                     <template #content>
                                         <!-- Account Management -->
                                         <div class="block px-4 py-2 mb-0 text-xs text-gray-400">
-                                            Manage Account
+                                            Opciones
                                         </div>
 
                                         <DropdownLink :href="route('post.index')">

@@ -14,7 +14,7 @@ class ImageController extends Controller
      */
     public function storeImageFromUrl($url, $folder = '/image/post/',$extension = 'jpg')
     {
-        $imageUrl = $url; 
+        $imageUrl = $url;
         $client = new Client();
         $response = $client->get($imageUrl);
         $filename = time().uniqid().'.'.$extension;
@@ -38,11 +38,20 @@ class ImageController extends Controller
             ['image' => 'required|mimes:jpg,jpeg,png,gif,svg,html|max:10240'],
         );
 
-        Storage::disk('public_upload')->delete("image/$modelname/".$model->image);
+        if (app()->environment('local')) {
+            Storage::disk('public_upload')->delete("image/$modelname/".$model->image);
+        } else {
+            $filePath = public_path("image/$modelname/".$model->image);
+            Storage::disk('local')->delete($filePath);
+        }
 
         $data['image'] = $filename = time().'.'.$request['image']->extension();
 
-        $request->image->move(public_path("image/$modelname"), $filename);
+        if (app()->environment('local')) {
+            $request->image->move(public_path("image/$modelname"), $filename);
+        } else {
+            $request->image->move(base_path('public_html/image/'.$modelname.'/'), $filename);
+        }
 
         $model->update(
             $data

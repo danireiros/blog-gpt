@@ -94,3 +94,7 @@
     font-weight: normal;
     font-style: normal;
 }
+
+.dark strong {
+    color: var(--darktext);
+}

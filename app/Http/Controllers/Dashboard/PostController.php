@@ -176,11 +176,20 @@ class PostController extends Controller
             ['image' => 'required|mimes:jpg,jpeg,png,gif|max:10240'],
         );
 
-        Storage::disk('public_upload')->delete("image/post/".$post->image);
+        if (app()->environment('local')) {
+            Storage::disk('public_upload')->delete("image/post/".$post->image);
+        } else {
+            $filePath = public_path('image/post/' . $post->image);
+            Storage::disk('local')->delete($filePath);
+        }
 
         $data['image'] = $filename = time().'.'.$request['image']->extension();
 
-        $request->image->move(public_path('image/post'), $filename);
+        if (app()->environment('local')) {
+            $request->image->move(public_path('image/post'), $filename);
+        } else {
+            $request->image->move(base_path('public_html/image/post/'), $filename);
+        }
 
         $post->update(
             $data

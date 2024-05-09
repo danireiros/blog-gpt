@@ -39,7 +39,7 @@ const profilePhoto = (url) => {
         <Banner />
 
         <div class="min-h-screen pb-28 bg-neutral-50 dark:bg-gray-900">
-            <nav class="bg-neutral-100 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+            <nav class="bg-neutral-100 border-b border-gray-100">
 
                 <div class="w-100 px-2 flex justify-center h-12">
                     <h2 class="m-2 text-indigo-400">
@@ -100,7 +100,7 @@ const profilePhoto = (url) => {
                                     <template #content>
                                         <!-- Account Management -->
                                         <div class="block px-4 py-2 mb-0 text-xs text-gray-400">
-                                            Manage Account
+                                            Opciones
                                         </div>
 
                                         <DropdownLink v-if="$page.props.auth.user.role == 1" :href="route('post.index')">

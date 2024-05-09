@@ -1,5 +1,8 @@
 <template>
     <BlogLayout>
+
+        <Head :title="post.title" />
+
         <template #catnavs>
             <div v-for="c in categories" :key="c.id">
                 <div class="hidden space-x-8 sm:-my-px sm:ms-4 sm:flex h-full">
@@ -45,7 +48,7 @@
 </template>
 
 <script>
-    import { Link, router } from '@inertiajs/vue3';
+    import { Head, Link, router } from '@inertiajs/vue3';
 
     import BlogLayout from "@/Layouts/BlogLayout.vue";
     import Pagination from '@/Shared/Pagination.vue';
@@ -76,6 +79,7 @@
             NavLink,
             ResponsiveNavLink,
             CommentSection,
+            Head
         },
         props: {
             post: Object,

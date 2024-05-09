@@ -26,7 +26,7 @@ class AuthorController extends Controller
             $authors->where('category_id', $filter_category_id);
 
         $authors = $authors->paginate(10);
-        
+
         return Inertia('Dashboard/Author/Index', compact('authors', 'categories'));
     }
 
@@ -49,7 +49,7 @@ class AuthorController extends Controller
 
         if($request->image)
             $this->upload($request, $author);
-        
+
         return to_route('author.index')->with('message', 'Autor '. $author->name.' creado con exito.');
     }
 
@@ -80,7 +80,7 @@ class AuthorController extends Controller
 
         if($request->image)
             $this->upload($request, $author);
-        
+
         return to_route('author.index')->with('message', 'Autor '. $author->title.' actualizado con exito.');
     }
 
@@ -101,11 +101,20 @@ class AuthorController extends Controller
             ['image' => 'required|mimes:jpg,jpeg,png,gif|max:10240'],
         );
 
-        Storage::disk('public_upload')->delete("image/author/".$author->image);
+        if (app()->environment('local')) {
+            Storage::disk('public_upload')->delete("image/author/".$author->image);
+        } else {
+            $filePath = public_path('image/author/' . $author->image);
+            Storage::disk('local')->delete($filePath);
+        }
 
         $data['image'] = $filename = time().'.'.$request['image']->extension();
 
-        $request->image->move(public_path('image/author'), $filename);
+        if (app()->environment('local')) {
+            $request->image->move(public_path('image/author'), $filename);
+        } else {
+            $request->image->move(base_path('public_html/image/author/'), $filename);
+        }
 
         $author->update(
             $data
