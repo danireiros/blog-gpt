@@ -1,7 +1,8 @@
 <template>
     <BlogLayout>
-
-        <Head title="Inicio" />
+        <Head>
+            <title>Explora las últimas noticias sobre tecnología, actualidad, deporte, videojuegos, etc. Mantente actualizado con análisis profundos y artículos informativos.</title>
+        </Head>
 
         <template #catnavs>
             <div v-for="c in categories" :key="c.id">

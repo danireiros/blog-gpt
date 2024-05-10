@@ -60,6 +60,15 @@ class PostController extends Controller
         }
 
         $categories = Category::all();
-        return Inertia('Blog/Post/Index', compact('post', 'categories', 'comments', 'user'));
+        //return Inertia('Blog/Post/Index', compact('post', 'categories', 'comments', 'user'));
+
+        $data = compact('post', 'categories', 'comments', 'user');
+        $data['event'] = [
+            'url' => 'https://infoparati.es/blog/'.$slug,
+            'title' => $post->title,
+            'description' => $post->description,
+            'image' => 'https://infoparati.es/image/post/'.$post->image,
+        ];
+        return Inertia('Blog/Post/Index', $data);
     }
 }

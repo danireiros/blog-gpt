@@ -1,7 +1,8 @@
 <template>
     <BlogLayout>
-
-        <Head :title="post.title" />
+        <Head>
+            <title>{{ post.title }}</title>
+        </Head>
 
         <template #catnavs>
             <div v-for="c in categories" :key="c.id">
